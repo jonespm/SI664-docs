@@ -1,34 +1,21 @@
 # Windows 10: Setting up a Python 3.x / Django 2.x Development Environment Using Chocolatey
 
-I do my development work on a Mac. But I also run Windows 10 using 
-[Parallels Desktop](https://www.parallels.com/).  What follows are the steps I took to set up a 
-Python 3.x/Django 2.x dev environment in Windows, based in part on Lisa Tagliaferri's excellent 
-[guide](#tagliaferri).  I'll discuss how to add MySQL and connect it to Django in a another install 
-guide.
+I do my development work on a Mac. But I also run Windows 10 using [Parallels Desktop](https://www.parallels.com/).  What follows are the steps I took to set up a Python 3.x/Django 2.x dev environment in Windows, based in part on Lisa Tagliaferri's excellent [guide](#tagliaferri).  I'll discuss how to add MySQL and connect it to Django in a another install guide.
  
-Outside the Parallels virtual machine (VM) I use [Homebrew](https://brew.sh/), a macOS package 
-manager, to acquire and maintain a good deal of the software I use on a daily basis. Within Windows 
-I turned to [Chocolatey](https://chocolatey.org/) to manage my installs of nano, Python and Git.
+Outside the Parallels virtual machine (VM) I use [Homebrew](https://brew.sh/), a macOS package manager, to acquire and maintain a good deal of the software I use on a daily basis. Within Windows I turned to [Chocolatey](https://chocolatey.org/) to manage my installs of nano, Python and Git.
 
 I installed Chocolatey using Windows [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/getting-started/getting-started-with-windows-powershell?view=powershell-6). 
-Chocolatey can also be installed using `cmd.exe`.  See the Chocolatey [install page]
-(https://chocolatey.org/docs/installation) for directions.
-
-<a name="introduction"></a>
+Chocolatey can also be installed using `cmd.exe`.  See the Chocolatey 
+[install page](https://chocolatey.org/docs/installation) for directions.
 
 ## 1.0  Configuring Windows PowerShell
 
-Windows PowerShell is a command line shell for system administrators built on top of .Net.  
-Administrative tasks are performed by running `cmdlets` (pronounced "command-lets").
+Windows PowerShell is a command line shell for system administrators built on top of .Net. Administrative tasks are performed by running `cmdlets` (pronounced "command-lets").
 
 ### 1.1 Open PowerShell
-Click the start menu icon (lower left corner).  Type "PowerShell" in the search box.  Then 
-*right-click* on the "Windows PowerShell Desktop app" option and select "Run as administrator".  
-If prompted, click "Yes" to allow PowerShell to make changes to your device.  The PowerShell command 
-line shell will then open displaying a prefix prompt of "PS".
+Click the start menu icon (lower left corner).  Type "PowerShell" in the search box.  Then *right-click* on the "Windows PowerShell Desktop app" option and select "Run as administrator".  If prompted, click "Yes" to allow PowerShell to make changes to your device.  The PowerShell command line shell will then open displaying a prefix prompt of "PS".
 
-__WARNING__: Be sure that you are running PowerShell _as an administrator_ before executing the 
-following commands.
+__WARNING__: Be sure that you are running PowerShell _as an administrator_ before executing the following commands.
 
 ```
 Windows PowerShell
@@ -51,12 +38,9 @@ PS C:\Users\arwhyte> exit
 ```
 
 ### 1.2 Change PowerShell's Execution Policy
-"Restricted" is the default execution policy.  It prevents you from running scripts.  Change 
-PowerShell's execution policy to "RemoteSigned".  "RemoteSigned" will let you run scripts and 
-configuration files downloaded from the Internet and signed by trusted publishers.
+"Restricted" is the default execution policy.  It prevents you from running scripts.  Change PowerShell's execution policy to "RemoteSigned".  "RemoteSigned" will let you run scripts and configuration files downloaded from the Internet and signed by trusted publishers.
 
-__WARNING__: Note that a "trusted" script could still include malicious code so consider carefully 
-what scripts you choose to execute when running under the new execution policy.
+__WARNING__: Note that a "trusted" script could still include malicious code so consider carefully what scripts you choose to execute when running under the new execution policy.
 
 First, set the scope of the new execution policy to the current user (i.e., you).
 
@@ -64,10 +48,7 @@ First, set the scope of the new execution policy to the current user (i.e., you)
 PS C:\Users\arwhyte> Set-ExecutionPolicy -Scope CurrentUser
 ```
 
-PowerShell will then prompt you to select an Execution Policy.  Type "RemoteSigned" and then 
-press `Enter`. PowerShell will then ask if you to change the current execution policy.  Type 
-"y" (yes) and the "RemoteSigned" execution policy will be instituted.  To confirm the policy 
-change enter the following command:
+PowerShell will then prompt you to select an Execution Policy.  Type "RemoteSigned" and then press `Enter`. PowerShell will then ask if you to change the current execution policy.  Type "y" (yes) and the "RemoteSigned" execution policy will be instituted.  To confirm the policy change enter the following command:
 
 ```
 PS C:\Users\arwhyte> Get-ExecutionPolicy -List
@@ -86,24 +67,21 @@ MachinePolicy       Undefined
 ```
 
 ## 2.0 Install Chocolatey
-[Chocolatey](https://chocolatey.org/) is a package manager for Windows. Like [Homebrew](https://brew.sh/) 
-it simplifies installing, configuring, updating, and removing Windows software. Before 
-downloading and running the Chocolatey install script, create a WebClient object called `$script` 
-in order to share the Internet connection settings with Internet Explorer:
+[Chocolatey](https://chocolatey.org/) is a package manager for Windows. Like [Homebrew]
+(https://brew.sh/) it simplifies installing, configuring, updating, and removing Windows software. Before downloading and running the Chocolatey install script, create a WebClient object called `$script` in order to share the Internet connection settings with Internet Explorer:
 
 ```
 PS C:\Users\arwhyte> $script = New-Object Net.WebClient
 ```
 
-Then review the available properties and methods of the `$script` object by piping it to the 
-`Get-Member` class:
+Then review the available properties and methods of the `$script` object by piping it to the `Get-Member` class:
 
 ```
 $script | Get-Member
 ```
 
-A long list of methods and properties will be outputed to the screen. The `DownloadString` method
- is what we will use to download the Chocolatey install script.
+A long list of methods and properties will be outputed to the screen. The `DownloadString` method 
+is what we will use to download the Chocolatey install script.
 
 ```
 ...
@@ -123,8 +101,7 @@ Then install Chocolatey:
 PS C:\Users\arwhyte> iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 ```
 
-The `iwr`("Invoke-WebRequest") cmdlet will download and parse the Chocolatey install script before 
-piping it on to the `iex` (Invoke-Expression) cmdlet which will execute install script.
+The `iwr`("Invoke-WebRequest") cmdlet will download and parse the Chocolatey install script before piping it on to the `iex` (Invoke-Expression) cmdlet which will execute install script.
 
 Allow PowerShell to install Chocolatey.
 
@@ -132,9 +109,7 @@ Allow PowerShell to install Chocolatey.
 Now let's install nano, Python and Git.
 
 ### 3.1 Install nano
-nano is a text editor with a command line interface that can be invoked within PowerShell to write 
-programs. Issue the following `choco` command to install the nano [package](https://chocolatey
-.org/packages/nano):
+nano is a text editor with a command line interface that can be invoked within PowerShell to write programs. Issue the following `choco` command to install the nano [package](https://chocolatey.org/packages/nano):
 
 ```
 PS C:\Users\arwhyte> choco install -y nano
@@ -142,8 +117,8 @@ PS C:\Users\arwhyte> choco install -y nano
 _Note_: the `-y` flag tells Chocolatey to execute the script without a formal confirmation prompt.
 
 ### 3.2 Install Python 3.7.x
-Issue the following `choco` command to install the latest version of Python 3.7.x (currently 3.7.0)
- using the Chocolatey Python [package](https://chocolatey.org/packages/python):
+Issue the following `choco` command to install the latest version of Python 3.7.x (currently 3.7
+.0) using the Chocolatey Python [package](https://chocolatey.org/packages/python):
 
 ```
 PS C:\Users\arwhyte> choco install -y python
@@ -155,8 +130,7 @@ _Note_: The default location of the Chocolatey Python 3.7.x install is:
 C:\Python37
 ```
 
-If you want to install Python in another location set the `/InstallDir` parameter to the location of 
-your choice.
+If you want to install Python in another location set the `/InstallDir` parameter to the location of your choice.
 
 ```
 PS C:\Users\arwhyte> choco install python3 --params "/InstallDir:C:\your\install\path"
@@ -192,8 +166,7 @@ python package files install completed. Performing other installation steps.
 Chocolatey installed 2/2 packages.
  See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
  ```
-You can check the Python installation location by starting Python in the shell and returning the 
-path to the system executable:
+You can check the Python installation location by starting Python in the shell and returning the path to the system executable:
 
 ```
 PS C:\> python
@@ -206,19 +179,14 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> exit()
 ```
 
-You can also confirm if the `PATH` environment variable has been updated by clicking the start menu 
-icon (lower left corner) and searching for the "SystemPropertiesAdvanced" run command.  Then 
-*right-click* on the "SystemPropertiesAdvanced" option and select "Run as administrator" to open 
-the System Properties Advanced tab.  Click "Environment Variables . . ." and check the System 
-variables `PATH` variable.  It should include paths to your Python 3.7.x directory:
+You can also confirm if the `PATH` environment variable has been updated by clicking the start menu icon (lower left corner) and searching for the "SystemPropertiesAdvanced" run command.  Then *right-click* on the "SystemPropertiesAdvanced" option and select "Run as administrator" to open the System Properties Advanced tab.  Click "Environment Variables . . ." and check the System variables `PATH` variable.  It should include paths to your Python 3.7.x directory:
 
 ```
 C:\Python37\Scripts;
 C:\Python37\;
 ```
 
-Confirm that Python has been successfully installed by typing the command `refreshenv` to 
-close/reopen PowerShell.
+Confirm that Python has been successfully installed by typing the command `refreshenv` to close/reopen PowerShell.
 
 ```
 PS C:\Users\arwhyte> refreshenv
@@ -227,8 +195,8 @@ PS C:\Users\arwhyte> python -V
 Python 3.7.0
 ```
 
-__WARNING__: running `refreshenv` did not work for me.  I had to exit PowerShell and then restart it
- (as administrator) in order to get it to recognize the addition of Python in `PATH`.
+__WARNING__: running `refreshenv` did not work for me.  I had to exit PowerShell and then restart
+ it (as administrator) in order to get it to recognize the addition of Python in `PATH`.
 
 ### 3.3 Install Git
 Issue the following `choco` command to install the Git [package](https://chocolatey.org/packages/git):
@@ -264,13 +232,7 @@ PS C:\Users\arwhyte> choco upgrade chocolatey
 ```
 
 ### 4.0 Git Working directory for the Django Project
-I use [Git](https://git-scm.com/) as my distributed version control system and [Github]
-(https://github.com/) to store and share my work.  If you don't have a Github account create one 
-(it's free). I organize my development work locally by service (e.g., Bitbucket, Github) and by 
-the organization or user account whose repos I choose to fork.  I offer this approach merely as an 
-example; choose a directory structure for organizing your 
-project work that makes 
-sense to you.
+I use [Git](https://git-scm.com/) as my distributed version control system and [Github](https://github.com/) to store and share my work.  If you don't have a Github account create one (it's free). I organize my development work locally by service (e.g., Bitbucket, Github) and by the organization or user account whose repos I choose to fork.  I offer this approach merely as an example; choose a directory structure for organizing your project work that makes sense to you.
 
 ```
 Development\
@@ -286,35 +248,30 @@ Development\
           ...
 ```
 
-Since I'm not forking a repo from which my django project work will be based (initially) I'll create
- my project in the arwhyte\ folder:
+Since I'm not forking a repo from which my django project work will be based (initially) I'll 
+create my project in the arwhyte\ folder:
 
 ```
 PS C:\Users\arwhyte> mkdir Development/repos/github/arwhyte/django_tutorial
 ```
 
-Next, I initialize the empty django_tutorial directory as a Git repo:
+Next, initialize the empty django_tutorial directory as a Git repo:
 
 ```
 PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> git init
 Initialized empty Git repository in C:/Users/arwhyte/Development/repos/github/arwhyte/django_tutorial/.git/
 ```
 
-You do the same.  Decide on a directory location for the Django project work.  Then initialize the 
-directory as an empty Git repo.
+You do the same.  Decide on a directory location for the Django project work.  Then initialize the directory as an empty Git repo.
 
-That's enough Git for now.  We will do more with Git and Github later.  For a useful Git primer 
-read Roger Dudler's [git - the simple guide](http://rogerdudler.github.io/git-guide/).
+That's enough Git for now.  We will do more with Git and Github later.  For a useful Git primer read Roger Dudler's [git - the simple guide](http://rogerdudler.github.io/git-guide/).
 
 ## 5.0 Django Project Virtual Environment
-Next, create a virtual environment isolate the Django development work from your other 
-Python projects using the `virtualenv` package. If you are fuzzy on the purpose of virtual 
-environments review Real Python's 
+Next, create a virtual environment isolate the Django development work from your other Python projects using the `virtualenv` package. If you are fuzzy on the purpose of virtual environments review Real Python's 
 [Python Virtual Environments: a Primer](https://realpython.com/python-virtual-environments-a-primer/)
 
 ### 5.1 Upgrade pip
-However, before we install `virtualenv` make sure that the latest version of `pip`, Python's own 
-package manager, is installed locally:
+However, before we install `virtualenv` make sure that the latest version of `pip`, Python's own package manager, is installed locally:
 
 ```
 PS C:\Users\arwhyte> python -m pip install --upgrade pip
@@ -335,8 +292,7 @@ PS PS C:\Users\arwhyte> pip install virtualenv
 ```
 
 ### 5.3 Create the Virtual Environment
-Now create a virtual environment for your django project.  Create it from within the project root 
-directory:
+Now create a virtual environment for your django project.  Create it from within the project root directory:
 
 ```
 PS C:\Users\arwhyte> cd Development\repos\github\arwhyte\django_tutorial
@@ -401,10 +357,7 @@ django-admin "startproject" command. Note the inclusion of a trailing dot ('.') 
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> django-admin startproject mysite .
 ```
 
-__WARNING__: make sure you include the trailing dot ('.') in the command.  The dot creates the new 
-project with a directory structure that simplifies deployment to a server.  If you neglect to 
-include the dot, delete the directories and files that were created (except 'venv') and run the 
-command again along with the trailing doc ('.').
+__WARNING__: make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
 
 Generating the `mysite` results in the following project layout:
 
@@ -442,8 +395,7 @@ Quit the server with CTRL-BREAK.
 
 __INFO__: ignore the database migration warnings; you will address them momentarily.
 
-Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install 
-worked successfully! Congratulations!" page successfully loads.
+Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install worked successfully! Congratulations!" page successfully loads.
 
 Once confirmed, shut down the development server by typing `Control` - `c`.
 
