@@ -8,7 +8,7 @@ I installed Chocolatey using Windows [PowerShell](https://docs.microsoft.com/en-
 Chocolatey can also be installed using `cmd.exe`.  See the Chocolatey 
 [install page](https://chocolatey.org/docs/installation) for directions.
 
-## 1.0  Configuring Windows PowerShell
+## 1.0  Configure Windows PowerShell
 
 Windows PowerShell is a command line shell for system administrators built on top of .Net. Administrative tasks are performed by running `cmdlets` (pronounced "command-lets").
 
@@ -105,10 +105,10 @@ The `iwr`("Invoke-WebRequest") cmdlet will download and parse the Chocolatey ins
 
 Allow PowerShell to install Chocolatey.
 
-## 3.0 Chocolatey Package Installs
+## 3.0 Install Chocolatey Packages
 Now let's install nano, Python and Git.
 
-### 3.1 Install nano
+### 3.1 nano
 nano is a text editor with a command line interface that can be invoked within PowerShell to write programs. Issue the following `choco` command to install the nano [package](https://chocolatey.org/packages/nano):
 
 ```
@@ -116,9 +116,8 @@ PS C:\Users\arwhyte> choco install -y nano
 ```
 _Note_: the `-y` flag tells Chocolatey to execute the script without a formal confirmation prompt.
 
-### 3.2 Install Python 3.7.x
-Issue the following `choco` command to install the latest version of Python 3.7.x (currently 3.7
-.0) using the Chocolatey Python [package](https://chocolatey.org/packages/python):
+### 3.2 Python 3.7.x
+Issue the following `choco` command to install the latest version of Python 3.7.x (currently 3.7.0) using the Chocolatey Python [package](https://chocolatey.org/packages/python):
 
 ```
 PS C:\Users\arwhyte> choco install -y python
@@ -179,7 +178,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> exit()
 ```
 
-You can also confirm if the `PATH` environment variable has been updated by clicking the start menu icon (lower left corner) and searching for the "SystemPropertiesAdvanced" run command.  Then *right-click* on the "SystemPropertiesAdvanced" option and select "Run as administrator" to open the System Properties Advanced tab.  Click "Environment Variables . . ." and check the System variables `PATH` variable.  It should include paths to your Python 3.7.x directory:
+You can also confirm if the `PATH` environment variable has been updated by clicking the start 
+menu icon (lower left corner) and searching for the "SystemPropertiesAdvanced" run command.  Then *right-click* on the "SystemPropertiesAdvanced" option and select "Run as administrator" to open the System Properties Advanced tab.  Click "Environment Variables . . ." and check the System variables `PATH` variable.  It should include paths to the Python 3.7.x directory:
 
 ```
 C:\Python37\Scripts;
@@ -196,16 +196,17 @@ Python 3.7.0
 ```
 
 __WARNING__: running `refreshenv` did not work for me.  I had to exit PowerShell and then restart
- it (as administrator) in order to get it to recognize the addition of Python in `PATH`.
+ it (as administrator) in order to get it to recognize the addition of Python in the `PATH` 
+ environment variable.
 
-### 3.3 Install Git
+### 3.3 Git
 Issue the following `choco` command to install the Git [package](https://chocolatey.org/packages/git):
 
 ```
 PS C:\Users\arwhyte> choco install git -params "/GitAndUnixToolsOnPath"
 ```
 
-Chocolatey will install git, the BASH tools and add each to your 'PATH'.
+Chocolatey will install git, the BASH tools and add each to your `PATH` environment variable.
 
 ### 3.4 Confirm Chocolatey package installs
 Let's check what packages we've installed so far:
@@ -231,7 +232,7 @@ By the way, upgrading Chocolatey itself is easy:
 PS C:\Users\arwhyte> choco upgrade chocolatey
 ```
 
-### 4.0 Git Working directory for the Django Project
+## 4.0 Create a Git Working directory
 I use [Git](https://git-scm.com/) as my distributed version control system and [Github](https://github.com/) to store and share my work.  If you don't have a Github account create one (it's free). I organize my development work locally by service (e.g., Bitbucket, Github) and by the organization or user account whose repos I choose to fork.  I offer this approach merely as an example; choose a directory structure for organizing your project work that makes sense to you.
 
 ```
@@ -248,14 +249,14 @@ Development\
           ...
 ```
 
-Since I'm not forking a repo from which my django project work will be based (initially) I'll 
-create my project in the arwhyte\ folder:
+In my case, since I'm not basing my django project on some other individual's or organization's 
+forked repo I'll create my project in the arwhyte\ folder:
 
 ```
 PS C:\Users\arwhyte> mkdir Development/repos/github/arwhyte/django_tutorial
 ```
 
-Next, initialize the empty django_tutorial directory as a Git repo:
+Next, I initialize the empty django_tutorial directory as a Git repo:
 
 ```
 PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> git init
@@ -267,11 +268,10 @@ You do the same.  Decide on a directory location for the Django project work.  T
 That's enough Git for now.  We will do more with Git and Github later.  For a useful Git primer read Roger Dudler's [git - the simple guide](http://rogerdudler.github.io/git-guide/).
 
 ## 5.0 Django Project Virtual Environment
-Next, create a virtual environment isolate the Django development work from your other Python projects using the `virtualenv` package. If you are fuzzy on the purpose of virtual environments review Real Python's 
-[Python Virtual Environments: a Primer](https://realpython.com/python-virtual-environments-a-primer/)
+Next, create a virtual environment in order to isolate the Django project development work from other Python projects using the `virtualenv` package. If you are fuzzy on the purpose of virtual environments review Real Python's [Python Virtual Environments: a Primer](https://realpython.com/python-virtual-environments-a-primer/)
 
 ### 5.1 Upgrade pip
-However, before we install `virtualenv` make sure that the latest version of `pip`, Python's own package manager, is installed locally:
+However, before installing `virtualenv` make sure that the latest version of `pip`, Python's own package manager, is installed locally:
 
 ```
 PS C:\Users\arwhyte> python -m pip install --upgrade pip
