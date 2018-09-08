@@ -1,15 +1,15 @@
-# Windows 10: Setting up a Python 3.x / Django 2.x Development Environment Using Chocolatey
+# Windows 10: Setting up a Python 3.7.x, Django 2.1.x, MySQL 8.0.x Development Environment
 
 I do my development work on a Mac. But I also run Windows 10 using [Parallels Desktop](https://www.parallels.com/).  What follows are the steps I took to set up a Python 3.x/Django 2.x dev environment in Windows, based in part on Lisa Tagliaferri's excellent [guide](#tagliaferri).  I'll discuss how to add MySQL and connect it to Django in a another install guide.
  
-Outside the Parallels virtual machine (VM) I use [Homebrew](https://brew.sh/), a macOS package manager, to acquire and maintain a good deal of the software I use on a daily basis. Within Windows I turned to [Chocolatey](https://chocolatey.org/) to manage my installs of nano, Python and Git.
+Outside the Parallels virtual machine (VM) I use [Homebrew](https://brew.sh/), a macOS package manager, to acquire and maintain a good deal of the software I use on a daily basis. Within Windows I turned to [Chocolatey](https://chocolatey.org/) to manage my installs of nano, Python and Git.  I use the [MySQL 8.0.x](https://dev.mysql.com/downloads/windows/installer/8.0.html) to install MySQL Server, MySQL Workbench and other related MySQL products. 
 
-I installed Chocolatey using Windows [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/getting-started/getting-started-with-windows-powershell?view=powershell-6). 
-Chocolatey can also be installed using `cmd.exe`.  See the Chocolatey 
-[install page](https://chocolatey.org/docs/installation) for directions.
+I installed Chocolatey using Windows [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/getting-started/getting-started-with-windows-powershell?view=powershell-6). Chocolatey can also be installed using `cmd.exe`.  See the Chocolatey [install page](https://chocolatey.org/docs/installation) for directions.
+
+The Chocolatey approach is but one way to manage software installs.  You may already have [Python 
+3.7.x](https://www.python.org/downloads/windows/), [nano](https://www.nano-editor.org/download.php), and [Git](https://git-scm.com/download/win) installed, and perhaps [MySQL 8.0.x](https://dev.mysql.com/downloads/windows/installer/8.0.html) installed as well using each of project's own installers.  If so, you can proceed directly to section 4.0 and review/follow the set up instructions for installing Django, initializing a Git working directory, and connecting your Django project to a MySQL 8.0.x database.
 
 ## 1.0  Configure Windows PowerShell
-
 Windows PowerShell is a command line shell for system administrators built on top of .Net. Administrative tasks are performed by running `cmdlets` (pronounced "command-lets").
 
 ### 1.1 Open PowerShell
@@ -105,11 +105,17 @@ The `iwr`("Invoke-WebRequest") cmdlet will download and parse the Chocolatey ins
 
 Allow PowerShell to install Chocolatey.
 
-## 3.0 Install Chocolatey Packages
+## 3.0 Add Chocolatey Packages
 Now let's install nano, Python and Git.
 
 ### 3.1 nano
-nano is a text editor with a command line interface that can be invoked within PowerShell to write programs. Issue the following `choco` command to install the nano [package](https://chocolatey.org/packages/nano):
+nano is a text editor with a command line interface that can be invoked within PowerShell to 
+write programs.
+
+__INFO__: nano is not required for this exercise but since it can be [run inside](#masek) 
+PowerShell as a file editor I went ahead and installed it. 
+
+Issue the following `choco` command to install the nano [package](https://chocolatey.org/packages/nano):
 
 ```
 PS C:\Users\arwhyte> choco install -y nano
@@ -232,6 +238,8 @@ By the way, upgrading Chocolatey itself is easy:
 PS C:\Users\arwhyte> choco upgrade chocolatey
 ```
 
+For other `choco` commands see the [Chocolatey Wiki](https://github.com/chocolatey/choco/wiki/CommandsReference) on Github.
+
 ## 4.0 Create a Git Working directory
 I use [Git](https://git-scm.com/) as my distributed version control system and [Github](https://github.com/) to store and share my work.  If you don't have a Github account create one (it's free). I organize my development work locally by service (e.g., Bitbucket, Github) and by the organization or user account whose repos I choose to fork.  I offer this approach merely as an example; choose a directory structure for organizing your project work that makes sense to you.
 
@@ -267,7 +275,7 @@ You do the same.  Decide on a directory location for the Django project work.  T
 
 That's enough Git for now.  We will do more with Git and Github later.  For a useful Git primer read Roger Dudler's [git - the simple guide](http://rogerdudler.github.io/git-guide/).
 
-## 5.0 Django Project Virtual Environment
+## 5.0 Create a Django Project Virtual Environment
 Next, create a virtual environment in order to isolate the Django project development work from other Python projects using the `virtualenv` package. If you are fuzzy on the purpose of virtual environments review Real Python's [Python Virtual Environments: a Primer](https://realpython.com/python-virtual-environments-a-primer/)
 
 ### 5.1 Upgrade pip
@@ -321,7 +329,6 @@ PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial>
 ```
 
 ### 5.5 Install Django
-
 After activating the django_tutorial virtual environment, install Django:
 
 ```
@@ -349,7 +356,7 @@ You can also confirm that Django is installed this way:
 2.1.1
 ```
 
-## 6.0 Django mysite project
+## 6.0 Generate the mysite project
 From within your Django project root directory, create the "mysite" project by issuing the 
 django-admin "startproject" command. Note the inclusion of a trailing dot ('.') following "mysite":
 
@@ -397,10 +404,310 @@ __INFO__: ignore the database migration warnings; you will address them momentar
 
 Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install worked successfully! Congratulations!" page successfully loads.
 
+### 6.2 Stop the Development Server
 Once confirmed, shut down the development server by typing `Control` - `c`.
 
-### 6.2 Create the Django tutorial polls app
-With Django installed, "mysite" created
+## 7.0 Install MySQL
+I don't use Chocolatey for installing and maintaining MySQL.  Instead, download and run the MySQL 
+MySQL Community Edition 8.0.x Windows [installer](https://dev.mysql.com/downloads/windows/installer/8.0.html). See the MySQL 8.0 Reference Documentation for [Windows installation](https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html) advice.
+
+A useful short video that walks the install process can be watched [here](https://www.youtube.com/watch?v=Ddx13KlW8yQ).
+
+__INFO__: choose the "mysql-installer-web-community-8.0.*.0.msi" file for online connections (\* 
+= patch number, e.g. 8.0.12).
+
+__WARNING__: Run the installer as an administrator.
+
+You will be prompted to sign in or create an Oracle account prior to performing this operation.  Once authenticated, click the fat blue "Download Now" button to initiate the install process.  Select "Run" when Windows asks what to do with the *.msi file and then select "Yes" when prompted to allow the installer to make changes to your device.
+
+### 7.1 License Agreement Screen / Choosing a Setup Type Screen
+The installer will search for previously installed packages.  Assuming previous installs are not found, agree to the license terms and then choose your setup type.  I chose "Custom".  Then click the "Next" button.
+
+### 7.2 Select Products and Features Screen
+The left-side box of the "Select Products and Features" screen lists the available products:
+
+```
++ MySQL Servers
++ Applications
++ MySQL Connectors
++ Documentation
+```
+
+Click the "+" sign in front of "MySQL Servers" and select the appropriate MySQL Server for your machine.  Then click the green right arrow button to move the selection to the right-hand box.  Repeat the selection process for the following products, clicking through until you reach each of the featured product installs and then moving them to the right-hand box:
+
+MySQL Workbench 8.x
+MySQL Shell 8.0.x
+MySQL Router 8.x
+MySQL Documents 8.x
+MySQL Notifier 1.1.x
+MySQL Utilities
+
+After completing selection of MySQL products to install click the "Next" button.
+
+### 7.3 Check Requirements Screen
+You may encounter a "Check Requirements" screen.  Depending on previous Window product installs you may need to install additional software (e.g., Microsoft Visual C++ 2015 Redistributable).  Select the required software and click the "Execute" button.  Once all the required software is installed click the "Next" button.
+
+__WARNING__: MySQL Server 8.0.X products *require* the Microsoft Visual C++ 2015 Redistributable Package in order to run on Windows platforms. You should be prompted Make sure the package has been installed on the system before installing the server. The package is available at the Microsoft Download Center. Additionally, MySQL debug binaries require Visual Studio 2015 to be installed.
+
+### 7.4 Installation Screen
+Click the "Execute" button to initiate installation of the MySQL products you have selected.  Once all products are installed click the "Next" button.
+
+### 7.5 Product Configuration
+Use the configuration wizard to adjust product settings.  Click the "Next" button to begin.
+
+### 7.5.1 Group Replication Screen
+Select "Standalone MySQL Server /Classic MySQL Replication".  Click the "Next" button.
+
+### 7.5.2 Type and Networking Screen
+* Server Configuration Type
+  - select "Development Computer"
+* Connectivity
+  - Accept defaults (TCP/IP; Port Number: 3306 (unless already in use), etc.)
+* Advanced Configuration
+  - Skip
+
+Click the "Next" button.
+
+### 7.5.3 Authentication Method Screen
+Select "Use Strong Password Encryption for Authentication". Click the "Next" button
+
+### 7.5.4 Accounts and Roles Screen
+* Root Account Password
+  - Provide a password for the "Root" user.  
+  - __WARNING__: write this password down and store it in a safe place.  You *will need it* later.
+* MySQL User Accounts
+  - Skip. You will add other users later.
+
+Click the "Next" button.    
+
+### 7.5.6 Windows Service Screen
+* Click the check box for "Configure MySQL as a Windows Service".  
+  - __WARNING__: left unchecked MySQL Server will require a manual start in order to use it.
+* Windows Service Details
+  - Set Windows Service Name to "MySQL80"
+  - Click the check box for "Start the MySQL Server at System Startup".
+* Run Windows Service as ...
+  - Select "Standard System Account".  
+
+Click the "Next" button.
+
+### 7.5.7 Plugins and Extensions Screen
+Ignore and click the "Next" button.
+
+### 7.5.8 Apply Configuration Screen
+Click the "Execute" button to apply the configuration changes. Upon completion click the "Next" button.
+
+### 7.5.9 Installation Complete Screen
+Click the "Finish" button.
+
+## 8.0 Start MySQL shell
+To confirm that all is well with the install log into the shell as the root user and issue the `SHOW DATABASES` command. You can use either PowerShell or cmd.exe.
+
+```
+PS C:\> mysql --user=root --password
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 39
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.06 sec)
+```
+
+### 8.1 Create a MySQL User Account
+I prefer to use a named user (arwhyte) rather than the root user for administering the MySQL 
+server.  Using the MySQL shell issue the following three statements:
+
+* CREATE USER . . . ;
+* GRANT ALL PRIVILEGES ON . . . ;
+* FLUSH PRIVILEGES . . . ; 
+
+__WARNING__: You must terminate each SQL statement with a semi-colon (";").
+
+__INFO__: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
+
+```mysql
+CREATE USER 'arwhyte'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MyPassword';
+GRANT ALL PRIVILEGES ON *.* TO 'arwhyte'@'localhost' WITH GRANT OPTION;
+CREATE USER 'arwhyte'@'%' IDENTIFIED WITH mysql_native_password BY 'MyPassword';
+GRANT ALL PRIVILEGES ON *.* TO 'arwhyte'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+__INFO__: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql
+.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
+
+```mysql
+CREATE USER 'arwhyte'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'somePassword';
+GRANT ALL PRIVILEGES ON *.* TO 'arwhyte'@'127.0.0.1' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+For additional information on adding users see the MySQL 8.0 Reference Documentation [6.3.2 Adding User Accounts](https://dev.mysql.com/doc/refman/8.0/en/adding-users.html).
+
+### 8.2 Obfuscate Your Password
+Next, use the `mysql_config_editor` client utility to store your user account's authentication 
+credentials in an obfuscated login path file named `.mylogin.cnf` for use by MySQL client programs. The file location is the 
+%APPDATA%\MySQL directory on Windows.
+
+__INFO__: replace 'arwhyte' and 'MyPassword' with the name and password of the user account you 
+created above.
+  
+```
+PS C:\> mysql_config_editor set --login-path=client --host=localhost --user=arwhyte --password
+```
+
+To confirm that the operation was successful invoke the `print` method:
+
+```
+PS C:\> mysql_config_editor print --all
+[client]
+user = arwhyte
+password = *****
+host = localhost
+```
+
+With your password obfuscated you can now log into the MySQL shell without specifying a password 
+argument:
+
+```
+PS C:\> mysql --user=arwhyte
+```
+
+__INFO__: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
+
+For additional information on obfuscating passwords see the MySQL 8.0 Reference Documentation [4.6.7 mysql_config_editor — MySQL Configuration Utility](https://dev.mysql.com/doc/refman/8.0/en/mysql-config-editor.html).
+
+### 8.3 Create a polls database
+
+Create a MySQL polls database by issuing the following command in the MySQL shell:
+
+```mysql
+CREATE DATABASE polls;
+```
+
+__WARNING__: You must terminate the SQL statement with a semi-colon (";").
+
+## 9.0 Install the Python mysqlclient Connector
+The Django Team [recommends](https://docs.djangoproject.com/en/2.1/ref/databases/#mysql-notes) 
+using the [mysqlclient](https://pypi.python.org/pypi/mysqlclient) to connect to MySQL.  Install it using `pip`.
+
+```
+(venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> pip install mysqlclient
+```
+
+__WARNING__: more than likely the install attempt will fail with an ugly error message that I've slimmed down to the following line:
+
+```
+...
+ _mysql.c(29): fatal error C1083: Cannot open include file: 'mysql.h': No such file or directory
+    error: command 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.15.26726\\bin\\HostX86\\x64\\cl.exe' failed with exit status 2
+...
+```
+
+I was able to resolve this roadblock by resorting to Christoph Gohlke's collection of [Unoffical 
+Windows Binaries for Python Extension Packages](https://www.lfd.uci.edu/~gohlke/pythonlibs/). 
+Download the appropriate the [mysqlclient](https://www.lfd.uci
+.edu/~gohlke/pythonlibs/#mysqlclient) the wheel (*.whl) file.  For Python 3.7 click on 
+"mysqlclient‑1.3.13‑cp37‑cp37m‑win_amd64.whl" and it will download to your machine.  Then perform
+ a *manual install* of the package via `pip`:
+
+```
+(venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> pip install C:\Users\arwhyte\Download
+s\mysqlclient-1.3.13-cp37-cp37m-win_amd64.whl
+Processing c:\users\arwhyte\downloads\mysqlclient-1.3.13-cp37-cp37m-win_amd64.whl
+Installing collected packages: mysqlclient
+Successfully installed mysqlclient-1.3.13
+```
+
+## 10.0 Connect Django to MySQL
+Now connect let's connect the Django project to the MySQL polls database.
+
+### 10.1 Update settings.py
+Comment out or replace the default SQLite connection settings in databases section of the Django 
+mysite `settings.py` file with the following Python dictionary, replacing the 'USER' value with 
+your MySQL user account name:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'polls',
+        'USER': 'arwhyte',
+        'OPTIONS': {
+            'read_default_file': 'C:\ProgramData\MySQL\MySQL Server 8.0\my.ini',
+        }
+    }
+}
+```
+
+The `read_default_file` property assumes a standard MySQL install path where the `my.ini` options
+ file can be found.
+
+__INFO__: later you will create a 'django' user with reduced privileges scoped to certain database 
+schemas only (e.g., polls, test_polls) using the MySQL Workstation and update the Django `settings.py` 
+databases section with the new 'django' user.
+
+### 10.1 Run migrations
+Next, populate the polls database with the tables required to support the app using the `migrate`
+ command.  If you earlier created a polls app when working with the default SQLite back-end, the 
+ polls models will be included in the migration.
+
+__WARNING__: you must activate the virtual environment before issuing the following commands.
+
+```
+(venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, polls, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying polls.0001_initial... OK
+  Applying sessions.0001_initial... OK
+```
+
+### 10.2 Create a Django superuser account
+To access the Django administration site, create a superuser account, providing a username, email address and password:
+
+```
+(venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> python manage.py createsuperuser
+Username (leave blank to use 'arwhyte'):
+Email address: arwhyte@umich.edu
+Password:
+Password (again):
+Superuser created successfully.
+```
+
+### 10.3 Create the Django tutorial polls app
+If you have not done so already, create a skeletal implementation of the Django tutorial polls app:
 
 ```
 (venv) PS C:\Users\arwhyte\Development1\repos\github\arwhyte\django_tutorial> python manage.py startapp polls
@@ -420,14 +727,13 @@ polls/
     views.py
 ```
 
-### TODO Start Tutorial
-
-ASFASFASFASFASFASFDASFASFD
-
-## Chocolatey Commands Reference
-For other `choco` commands see the [Chocolatey Wiki](https://github.com/chocolatey/choco/wiki/CommandsReference) on Github:
-
+## 11.0 Start/Continue the Django Team Polls Tutorial
+Either start or continue working on the Django Team's Polls [tutorial](https://docs.djangoproject.com/en/2.1/intro/tutorial01/). You may need to run additional migrations to update the MySQL polls database or recreate questions created earlier when the polls app was connected to the SQLite database.
 
 ## Sources
+<a name="masek">Masek, P</a>. Medium: [Text Editor inside PowerShell](https://medium.com/powershell-explained/text-editor-inside-powershell-22d2f5e748b8).  15 March 2017.
+
+<a name="phpsword">PhpSword</a>. YouTube: [Download & Install MySQL 8.0.11 on Windows 10 Operating System](https://www.youtube.com/watch?v=Ddx13KlW8yQ). 25 April 2018.
+
 <a name="tagliaferri">Tagliaferri, L.</a> Digital Ocean: 
 [How to Install Python 3 and Set Up a Local Programming Environment in Windows 10](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-windows-10). 24 October 2016.
