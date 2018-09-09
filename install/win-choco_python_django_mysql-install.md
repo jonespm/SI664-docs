@@ -124,7 +124,7 @@ Now let's install nano, Python and Git.
 nano is a text editor with a command line interface that can be invoked within PowerShell to 
 write programs.
 
-:large_blue_circle: nano is not required for this exercise but since it can be [run inside](#masek) PowerShell as a file editor I went ahead and installed it. 
+:bulb: nano is not required for this exercise but since it can be [run inside](#masek) PowerShell as a file editor I went ahead and installed it. 
 
 Issue the following `choco` command to install the nano [package](https://chocolatey.org/packages/nano):
 
@@ -319,8 +319,8 @@ Installing setuptools, pip, wheel...done.
 ```
 
 ### 5.4 Activate the Virtual Environment
-You __must__ activate the virtual environment before adding project-specific Python packages such
- as Django.
+:warning: You __must__ activate the virtual environment before adding project-specific Python 
+packages such as Django.
 
 ```commandline
 PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> venv\Scripts\activate
@@ -357,7 +357,7 @@ setuptools 40.2.0
 wheel      0.31.1
 ```
 
-You can also confirm that Django is installed this way:
+:bulb: You can also confirm that Django is installed this way:
 
 ```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> python -m django --version 2.1.1
@@ -407,7 +407,7 @@ Quit the server with CTRL-BREAK.
 [05/Sep/2018 23:15:07] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
 ```
 
-:large_blue_circle: ignore the database migration warnings; you will address them momentarily.
+:bulb: ignore the database migration warnings; you will address them momentarily.
 
 Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install worked successfully! Congratulations!" page successfully loads.
 
@@ -419,13 +419,13 @@ I don't use Chocolatey for installing and maintaining MySQL.  Instead, download 
 
 A useful short video that walks the install process can be watched [here](https://www.youtube.com/watch?v=Ddx13KlW8yQ).
 
-:large_blue_circle: choose the "mysql-installer-web-community-8.0.*.0.msi" file for online connections (\* = patch number, e.g. 8.0.12).
+:bulb: choose the "mysql-installer-web-community-8.0.*.0.msi" file for online connections (\* = patch number, e.g. 8.0.12).
 
 :warning: Run the installer as an administrator.
 
 You will be prompted to sign in or create an Oracle account prior to performing this operation.  Once authenticated, click the fat blue "Download Now" button to initiate the install process.  
 
-:large_blue_circle: you can also click "No thanks, just start my download" to bypass account creation/login.
+:bulb: you can also click "No thanks, just start my download" to bypass account creation/login.
 
 Select "Run" when Windows asks what to do with the *.msi file and then select "Yes" when prompted to allow the installer to make changes to your device.
 
@@ -549,7 +549,7 @@ server.  Using the MySQL shell issue the following three statements:
 
 :warning: You must terminate each SQL statement with a semi-colon (";").
 
-:large_blue_circle: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
+:bulb: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
 
 ```mysql
 CREATE USER 'arwhyte'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MyPassword';
@@ -559,7 +559,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'arwhyte'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
 
-:large_blue_circle: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
+:bulb: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
 
 ```mysql
 CREATE USER 'arwhyte'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'somePassword';
@@ -595,7 +595,7 @@ argument:
 PS C:\> mysql --user=arwhyte
 ```
 
-:large_blue_circle: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
+:bulb: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
 
 For additional information on obfuscating passwords see the MySQL 8.0 Reference Documentation [4.6.7 mysql_config_editor — MySQL Configuration Utility](https://dev.mysql.com/doc/refman/8.0/en/mysql-config-editor.html).
 
@@ -660,7 +660,7 @@ DATABASES = {
 
 Note that the `read_default_file` property assumes a standard MySQL install path where the `my.ini` options file can be found.
 
-:large_blue_circle: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
+:bulb: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
 
 ### 11.2 Run migrations
 Next, populate the polls database with the tables required to support both the app and Django's adminstration site using the `migrate` command.  If you earlier created a polls app when working with the default SQLite back-end, the polls models will be included in the migration.
