@@ -27,9 +27,9 @@ Windows PowerShell is a command line shell for system administrators built on to
 ### 1.1 Open PowerShell
 Click the start menu icon (lower left corner).  Type "PowerShell" in the search box.  Then *right-click* on the "Windows PowerShell Desktop app" option and select "Run as administrator".  If prompted, click "Yes" to allow PowerShell to make changes to your device.  The PowerShell command line shell will then open displaying a prefix prompt of "PS".
 
-__WARNING__: Be sure that you are running PowerShell _as an administrator_ before executing the following commands.
+:warning: Be sure that you are running PowerShell _as an administrator_ before executing the following commands.
 
-```
+```commandline
 Windows PowerShell
 Copyright (C) Microsoft Corporation. All rights reserved.
 
@@ -38,31 +38,31 @@ PS C:\Windows\system32>
 
 Enter the following command in order to change directories to your user directory:
 
-```
+```commandline
 PS C:\Windows\system32> cd ~
 PS C:\Users\arwhyte>
 ```
 
 When done with PowerShell (though not now), type "exit" and click enter.
 
-```
+```commandline
 PS C:\Users\arwhyte> exit
 ```
 
 ### 1.2 Change PowerShell's Execution Policy
 "Restricted" is the default execution policy.  It prevents you from running scripts.  Change PowerShell's execution policy to "RemoteSigned".  "RemoteSigned" will let you run scripts and configuration files downloaded from the Internet and signed by trusted publishers.
 
-__WARNING__: Note that a "trusted" script could still include malicious code so consider carefully what scripts you choose to execute when running under the new execution policy.
+:warning: Note that a "trusted" script could still include malicious code so consider carefully what scripts you choose to execute when running under the new execution policy.
 
 First, set the scope of the new execution policy to the current user (i.e., you).
 
-```
+```commandline
 PS C:\Users\arwhyte> Set-ExecutionPolicy -Scope CurrentUser
 ```
 
 PowerShell will then prompt you to select an Execution Policy.  Type "RemoteSigned" and then press `Enter`. PowerShell will then ask if you to change the current execution policy.  Type "y" (yes) and the "RemoteSigned" execution policy will be instituted.  To confirm the policy change enter the following command:
 
-```
+```commandline
 PS C:\Users\arwhyte> Get-ExecutionPolicy -List
 ```
 
@@ -82,13 +82,13 @@ MachinePolicy       Undefined
 [Chocolatey](https://chocolatey.org/) is a package manager for Windows. Like [Homebrew]
 (https://brew.sh/) it simplifies installing, configuring, updating, and removing Windows software. Before downloading and running the Chocolatey install script, create a WebClient object called `$script` in order to share the Internet connection settings with Internet Explorer:
 
-```
+```commandline
 PS C:\Users\arwhyte> $script = New-Object Net.WebClient
 ```
 
 Then review the available properties and methods of the `$script` object by piping it to the `Get-Member` class:
 
-```
+```commandline
 $script | Get-Member
 ```
 
@@ -103,13 +103,13 @@ DownloadString Method string DownloadString(string address), string DownloadStri
 
 Implement the method:
 
-```
+```commandline
 PS C:\Users\arwhyte> $script.DownloadString("https://chocolatey.org/install.ps1")
 ```
 
 Then install Chocolatey:
 
-```
+```commandline
 PS C:\Users\arwhyte> iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 ```
 
@@ -124,20 +124,20 @@ Now let's install nano, Python and Git.
 nano is a text editor with a command line interface that can be invoked within PowerShell to 
 write programs.
 
-__INFO__: nano is not required for this exercise but since it can be [run inside](#masek) 
-PowerShell as a file editor I went ahead and installed it. 
+:large_blue_circle: nano is not required for this exercise but since it can be [run inside](#masek) PowerShell as a file editor I went ahead and installed it. 
 
 Issue the following `choco` command to install the nano [package](https://chocolatey.org/packages/nano):
 
-```
+```commandline
 PS C:\Users\arwhyte> choco install -y nano
 ```
+
 _Note_: the `-y` flag tells Chocolatey to execute the script without a formal confirmation prompt.
 
 ### 3.2 Python 3.7.x
 Issue the following `choco` command to install the latest version of Python 3.7.x (currently 3.7.0) using the Chocolatey Python [package](https://chocolatey.org/packages/python):
 
-```
+```commandline
 PS C:\Users\arwhyte> choco install -y python
 ```
 
@@ -149,7 +149,7 @@ C:\Python37
 
 If you want to install Python in another location set the `/InstallDir` parameter to the location of your choice.
 
-```
+```commandline
 PS C:\Users\arwhyte> choco install python3 --params "/InstallDir:C:\your\install\path"
 ```
 
@@ -185,7 +185,7 @@ Chocolatey installed 2/2 packages.
  ```
 You can check the Python installation location by starting Python in the shell and returning the path to the system executable:
 
-```
+```commandline
 PS C:\> python
 Python 3.7.0 (v3.7.0:1bf9cc5093, Jun 27 2018, 04:59:51) [MSC v.1914 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
@@ -205,21 +205,20 @@ C:\Python37\;
 
 Confirm that Python has been successfully installed by typing the command `refreshenv` to close/reopen PowerShell.
 
-```
+```commandline
 PS C:\Users\arwhyte> refreshenv
 Refreshing environment variables from registry for cmd.exe. Please wait...Finished..
 PS C:\Users\arwhyte> python -V
 Python 3.7.0
 ```
 
-__WARNING__: running `refreshenv` did not work for me.  I had to exit PowerShell and then restart
- it (as administrator) in order to get it to recognize the addition of Python in the `PATH` 
- environment variable.
+:warning: running `refreshenv` did not work for me.  I had to exit PowerShell and then restart it
+ (as administrator) in order to get it to recognize the addition of Python in the `PATH` environment variable.
 
 ### 3.3 Git
 Issue the following `choco` command to install the Git [package](https://chocolatey.org/packages/git):
 
-```
+```commandline
 PS C:\Users\arwhyte> choco install git -params "/GitAndUnixToolsOnPath"
 ```
 
@@ -228,7 +227,7 @@ Chocolatey will install git, the BASH tools and add each to your `PATH` environm
 ### 3.4 Confirm Chocolatey package installs
 Let's check what packages we've installed so far:
 
-```
+```commandline
 PS C:\Users\arwhyte> choco list --local-only
 Chocolatey v0.10.11
 chocolatey 0.10.11
@@ -243,7 +242,7 @@ python3 3.7.0
 
 Looks good. By the way, upgrading Chocolatey itself is easy:
 
-```
+```commandline
 PS C:\Users\arwhyte> choco upgrade chocolatey
 ```
 
@@ -269,13 +268,13 @@ Development\
 In my case, since I'm not basing my django project on some other individual's or organization's 
 forked repo I'll create my project in the arwhyte\ folder:
 
-```
+```commandline
 PS C:\Users\arwhyte> mkdir Development/repos/github/arwhyte/django_tutorial
 ```
 
 Next, I initialize the empty django_tutorial directory as a Git repo:
 
-```
+```commandline
 PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> git init
 Initialized empty Git repository in C:/Users/arwhyte/Development/repos/github/arwhyte/django_tutorial/.git/
 ```
@@ -290,7 +289,7 @@ Next, create a virtual environment in order to isolate the Django project develo
 ### 5.1 Upgrade pip
 However, before installing `virtualenv` make sure that the latest version of `pip`, Python's own package manager, is installed locally:
 
-```
+```commandline
 PS C:\Users\arwhyte> python -m pip install --upgrade pip
 Collecting pip
   Using cached https://files.pythonhosted.org/packages/5f/25/e52d3f31441505a5f3af41213346e5b6c221c9e086a166f3703d2ddaf940/pip-18.0-py2.py3-none-any.whl
@@ -304,14 +303,14 @@ Successfully installed pip-18.0
 ### 5.2 Install virtualenv
 Once `pip` is updated, use it to install the `virtualenv` package.
 
-```
+```commandline
 PS PS C:\Users\arwhyte> pip install virtualenv
 ```
 
 ### 5.3 Create the Virtual Environment
 Now create a virtual environment for your django project.  Create it from within the project root directory:
 
-```
+```commandline
 PS C:\Users\arwhyte> cd Development\repos\github\arwhyte\django_tutorial
 PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> virtualenv venv
 Using base prefix 'c:\\python37'
@@ -323,7 +322,7 @@ Installing setuptools, pip, wheel...done.
 You __must__ activate the virtual environment before adding project-specific Python packages such
  as Django.
 
-```
+```commandline
 PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> venv\Scripts\activate
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial>
 ```
@@ -332,7 +331,7 @@ When activated the prompt is prefixed with the name of the virtual environment (
 
 To deactivate the virtual environment run:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> deactivate
 PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial>
 ```
@@ -340,14 +339,14 @@ PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial>
 ### 5.5 Install Django
 After activating the django_tutorial virtual environment, install Django:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> pip install Django
 ```
 
 ### 5.6 Confirm Virtual Environment Installed Packages
 Check the installed packages in your django project virtual environment:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> pip list
 Package    Version
 ---------- -------
@@ -360,7 +359,7 @@ wheel      0.31.1
 
 You can also confirm that Django is installed this way:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> python -m django --version 2.1.1
 ```
 
@@ -368,11 +367,11 @@ You can also confirm that Django is installed this way:
 From within your Django project root directory, create the "mysite" project by issuing the 
 django-admin "startproject" command. Note the inclusion of a trailing dot ('.') following "mysite":
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> django-admin startproject mysite .
 ```
 
-__WARNING__: make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
+:warning: make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
 
 Generating `mysite` results in the following project layout:
 
@@ -389,7 +388,7 @@ django-tutorial/
 ### 6.1 Start the Development Server
 Start up the development server by issuing the `runserver` command:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> python manage.py runserver
 Performing system checks...
 
@@ -408,7 +407,7 @@ Quit the server with CTRL-BREAK.
 [05/Sep/2018 23:15:07] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
 ```
 
-__INFO__: ignore the database migration warnings; you will address them momentarily.
+:large_blue_circle: ignore the database migration warnings; you will address them momentarily.
 
 Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install worked successfully! Congratulations!" page successfully loads.
 
@@ -416,19 +415,17 @@ Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Djan
 Once confirmed, shut down the development server by typing `Control` - `c`.
 
 ## <a name="mysqlinstall">7.0 Install MySQL</a>
-I don't use Chocolatey for installing and maintaining MySQL.  Instead, download and run the MySQL 
-MySQL Community Edition 8.0.x Windows [installer](https://dev.mysql.com/downloads/windows/installer/8.0.html). See the MySQL 8.0 Reference Documentation for [Windows installation](https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html) advice.
+I don't use Chocolatey for installing and maintaining MySQL.  Instead, download and run the MySQL Community Edition 8.0.x Windows [installer](https://dev.mysql.com/downloads/windows/installer/8.0.html). See the MySQL 8.0 Reference Documentation for [Windows installation](https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html) advice.
 
 A useful short video that walks the install process can be watched [here](https://www.youtube.com/watch?v=Ddx13KlW8yQ).
 
-__INFO__: choose the "mysql-installer-web-community-8.0.*.0.msi" file for online connections (\* 
-= patch number, e.g. 8.0.12).
+:large_blue_circle: choose the "mysql-installer-web-community-8.0.*.0.msi" file for online connections (\* = patch number, e.g. 8.0.12).
 
-__WARNING__: Run the installer as an administrator.
+:warning: Run the installer as an administrator.
 
 You will be prompted to sign in or create an Oracle account prior to performing this operation.  Once authenticated, click the fat blue "Download Now" button to initiate the install process.  
 
-__INFO__: you can also click "No thanks, just start my download" to bypass account creation/login.
+:large_blue_circle: you can also click "No thanks, just start my download" to bypass account creation/login.
 
 Select "Run" when Windows asks what to do with the *.msi file and then select "Yes" when prompted to allow the installer to make changes to your device.
 
@@ -459,7 +456,7 @@ After completing selection of MySQL products to install click the "Next" button.
 ### 7.3 Check Requirements Screen
 You may encounter a "Check Requirements" screen.  Depending on previous Window product installs you may need to install additional software (e.g., Microsoft Visual C++ 2015 Redistributable).  Select the required software and click the "Execute" button.  Once all the required software is installed click the "Next" button.
 
-__WARNING__: MySQL Server 8.0.X products *require* installation of the Microsoft Visual C++ 2015 Redistributable Package in order to run on Windows platforms. You should be prompted Make sure the package has been installed on the system before installing the server. The package is available at the Microsoft Download Center. Additionally, MySQL debug binaries require Visual Studio 2015 to be installed.
+:warning: MySQL Server 8.0.X products *require* installation of the Microsoft Visual C++ 2015 Redistributable Package in order to run on Windows platforms. You should be prompted Make sure the package has been installed on the system before installing the server. The package is available at the Microsoft Download Center. Additionally, MySQL debug binaries require Visual Studio 2015 to be installed.
 
 ### 7.4 Installation Screen
 Click the "Execute" button to initiate installation of the MySQL products you have selected.  Once all products are installed click the "Next" button.
@@ -486,7 +483,7 @@ Select "Use Strong Password Encryption for Authentication". Click the "Next" but
 #### 7.5.4 Accounts and Roles Screen
 * Root Account Password
   - Provide a password for the "Root" user.  
-  - __WARNING__: write this password down and store it in a safe place.  You *will need it* later.
+  - :warning: write this password down and store it in a safe place.  You *will need it* later.
 * MySQL User Accounts
   - Skip. You will add other users later.
 
@@ -494,7 +491,7 @@ Click the "Next" button.
 
 #### 7.5.5 Windows Service Screen
 * Click the check box for "Configure MySQL as a Windows Service".  
-  - __WARNING__: left unchecked MySQL Server will require a manual start in order to use it.
+  - :warning: left unchecked MySQL Server will require a manual start in order to use it.
 * Windows Service Details
   - Set Windows Service Name to "MySQL80"
   - Click the check box for "Start the MySQL Server at System Startup".
@@ -515,7 +512,7 @@ Click the "Finish" button.
 ## <a name="mysqluser">8.0 Create a MySQL User Account</a>
 To confirm that all is well with the install log into the shell as the root user and issue the `SHOW DATABASES` command. You can use either PowerShell or cmd.exe.
 
-```
+```commandline
 PS C:\> mysql --user=root --password
 Enter password: *********
 Welcome to the MySQL monitor.  Commands end with ; or \g.
@@ -550,9 +547,9 @@ server.  Using the MySQL shell issue the following three statements:
 * GRANT ALL PRIVILEGES ON . . . ;
 * FLUSH PRIVILEGES . . . ; 
 
-__WARNING__: You must terminate each SQL statement with a semi-colon (";").
+:warning: You must terminate each SQL statement with a semi-colon (";").
 
-__INFO__: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
+:large_blue_circle: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
 
 ```mysql
 CREATE USER 'arwhyte'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MyPassword';
@@ -562,7 +559,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'arwhyte'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
 
-__INFO__: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
+:large_blue_circle: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
 
 ```mysql
 CREATE USER 'arwhyte'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'somePassword';
@@ -575,15 +572,15 @@ For additional information on adding users see the MySQL 8.0 Reference Documenta
 ### 8.2 Obfuscate User Password
 Next, use the `mysql_config_editor` client utility to store your user account's authentication credentials in an obfuscated login path file named `.mylogin.cnf`. The file location is the %APPDATA%\MySQL directory on Windows.
 
-__WARNING__: replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
+:warning: replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
   
-```
+```commandline
 PS C:\> mysql_config_editor set --login-path=client --host=localhost --user=arwhyte --password
 ```
 
 To confirm that the operation was successful invoke the `print` method:
 
-```
+```commandline
 PS C:\> mysql_config_editor print --all
 [client]
 user = arwhyte
@@ -594,11 +591,11 @@ host = localhost
 With your password obfuscated you can now log into the MySQL shell without specifying a password 
 argument:
 
-```
+```commandline
 PS C:\> mysql --user=arwhyte
 ```
 
-__INFO__: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
+:large_blue_circle: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
 
 For additional information on obfuscating passwords see the MySQL 8.0 Reference Documentation [4.6.7 mysql_config_editor — MySQL Configuration Utility](https://dev.mysql.com/doc/refman/8.0/en/mysql-config-editor.html).
 
@@ -610,17 +607,18 @@ Create a MySQL polls database by issuing the following command in the MySQL shel
 CREATE DATABASE polls;
 ```
 
-__WARNING__: You must terminate the SQL statement with a semi-colon (";").
+:warning: You must terminate the SQL statement with a semi-colon (";").
 
 ## <a name="mysqlclient">10.0 Install the Python mysqlclient Connector</a>
 The Django Team [recommends](https://docs.djangoproject.com/en/2.1/ref/databases/#mysql-notes) 
 using the [mysqlclient](https://pypi.python.org/pypi/mysqlclient) to connect to MySQL.  Install it using `pip`.
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> pip install mysqlclient
 ```
 
-__WARNING__: more than likely the install attempt will fail with an ugly error message that I've slimmed down to the following line:
+:warning: :rage: more than likely the install attempt will fail with an ugly error message that I've 
+slimmed down to the following line:
 
 ```
 ...
@@ -629,9 +627,10 @@ __WARNING__: more than likely the install attempt will fail with an ugly error m
 ...
 ```
 
-__WORKAROUND__: I was able to resolve this roadblock by resorting to Christoph Gohlke's collection of [Unoffical Windows Binaries for Python Extension Packages](https://www.lfd.uci.edu/~gohlke/pythonlibs/). Download the appropriate the [mysqlclient](https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient) the wheel (*.whl) file.  For Python 3.7 click on "mysqlclient‑1.3.13‑cp37‑cp37m‑win_amd64.whl" and it will download to your machine.  Then perform a *manual install* of the package via `pip`:
+:wink: I was able to resolve this roadblock by resorting to Christoph Gohlke's collection of 
+[Unoffical Windows Binaries for Python Extension Packages](https://www.lfd.uci.edu/~gohlke/pythonlibs/). Download the appropriate the [mysqlclient](https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient) the wheel (*.whl) file.  For Python 3.7 click on "mysqlclient‑1.3.13‑cp37‑cp37m‑win_amd64.whl" and it will download to your machine.  Then perform a *manual install* of the package via `pip`:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> pip install C:\Users\arwhyte\Downloads\mysqlclient-1.3.13-cp37-cp37m-win_amd64.whl
 Processing c:\users\arwhyte\downloads\mysqlclient-1.3.13-cp37-cp37m-win_amd64.whl
 Installing collected packages: mysqlclient
@@ -661,14 +660,14 @@ DATABASES = {
 
 Note that the `read_default_file` property assumes a standard MySQL install path where the `my.ini` options file can be found.
 
-__INFO__: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
+:large_blue_circle: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
 
 ### 11.2 Run migrations
 Next, populate the polls database with the tables required to support both the app and Django's adminstration site using the `migrate` command.  If you earlier created a polls app when working with the default SQLite back-end, the polls models will be included in the migration.
 
-__WARNING__: you must activate the virtual environment before issuing this and the other `manage.py` commands described below.
+:warning: you must activate the virtual environment before issuing this and the other `manage.py` commands described below.
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> python manage.py migrate
 Operations to perform:
   Apply all migrations: admin, auth, contenttypes, polls, sessions
@@ -694,7 +693,7 @@ Running migrations:
 ### 11.3 Create a Django superuser account
 To access the Django administration site, create a superuser account, providing a username, email address and password:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> python manage.py createsuperuser
 Username (leave blank to use 'arwhyte'):
 Email address: arwhyte@umich.edu
@@ -706,7 +705,7 @@ Superuser created successfully.
 ### 11.4 Create the Django tutorial polls app
 If you have not done so already, create a skeletal implementation of the Django tutorial polls app:
 
-```
+```commandline
 (venv) PS C:\Users\arwhyte\Development1\repos\github\arwhyte\django_tutorial> python manage.py startapp polls
 ```
 

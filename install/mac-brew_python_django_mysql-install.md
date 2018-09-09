@@ -23,13 +23,13 @@ The Homebrew approach is but one way to manage software installs.  You may alrea
 ## <a name="xcodeinstall">1.0 Install Xcode</a>
 [Xcode](https://developer.apple.com/xcode/) is Apple's integrated development environment (IDE). Homebrew requires access to Xcode's developer tools.  First, check if Xcode is already installed:
  
-```
+```commandline
 kathrada:~ arwhyte$ xcode-select -p
 ```
 
 If the command outputs
 
-```
+```commandline
 /Applications/Xcode.app/Contents/Developer
 ```
 
@@ -39,22 +39,21 @@ then the full Xcode package is installed and you are ready to install Homebrew. 
 ## <a name="homebrewinstall">2.0 Install Homebrew</a>
 [Homebrew](https://brew.sh/) describes itself as "the missing package manager for macOS".  I use it to manage Git, GnuPG, Heroku, Hugo, Maven, nano, OpenSSL, Pandoc, PHP, Python, Ruby, SQLite and a number of other software installs.  
 
-Open the terminal (I use [iTerm2](https://www.iterm2.com/)) and run the following script to install 
-Homebrew:  
+Open the terminal (I use [iTerm2](https://www.iterm2.com/)) and run the following script to install Homebrew:  
 
-```
+```commandline
 kathrada:~ arwhyte$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 Confirm that Homebrew is healthy and ready to `brew`:
 
-```
+```commandline
 kathrada:~ arwhyte$ brew doctor
 ```
 
 If the command outputs
 
-```
+```commandline
 Your system is ready to brew
 ```
 
@@ -66,21 +65,21 @@ variable.
 
 Use the command line text editor nano to open your ~/.bash_profile:  
 
-```
+```commandline
 kathrada:~ arwhyte$ nano ~/.bash_profile
 ```
 
 If nano is not installed (e.g., the command fails) install it using the following nano [formula]
 (http://brewformulas.org/Nano):
 
-```
+```commandline
 kathrada:~ arwhyte$ brew install nano
 ```
 
 Once ~/.bash_profile is open, add or edit `PATH` environment variable listing `usr/local/bin` 
 before any other directories referenced in `PATH`.
 
-```
+```bash
 export PATH="/usr/local/bin:$PATH"
 ``` 
 
@@ -90,7 +89,7 @@ key when "File Name to Write: .bash_profile" is displayed. Then exit nano by hol
 
 To activate the changes in your current terminal session, issue the `source` command:
 
-```bash
+```commandline
 kathrada:~ arwhyte$ source ~/.bash_profile
 ```
 
@@ -101,13 +100,13 @@ Now let's install Python and Git.
 First confirm your existing Python installs:
 
 Python 2.x (the default version installed on all Macs)
-```
+```commandline
 kathrada:~ arwhyte$ python --version
 Python 2.7.15
 ```
 
 Python 3.x 
-```
+```commandline
 arwhyte$ python3 --version
 Python 3.7.0
 ```
@@ -116,33 +115,32 @@ If Python 3.x is installed but the version is not the latest (currently 3.7.0), 
 
 Issue the following [formula](http://brewformulas.org/Python) to install Python 3.7.x (pip and Setuptools are included)
 
-```
+```commandline
 kathrada:~ arwhyte$ brew install python
 ```
 
-__INFO__: the "python3" brew [formula](http://brewformulas.org/Python3) is now inactive.
+:large_blue_circle: the "python3" brew [formula](http://brewformulas.org/Python3) is now inactive.
 
-__WARNING__: When you `brew install` formulae that provide Python bindings, you should not 
-be in an active virtual environment.  See Homebrew Documentation: [Python](https://docs.brew.sh/Homebrew-and-Python.html).
+:warn: When you `brew install` formulae that provide Python bindings, you should not be in an active virtual environment.  See Homebrew Documentation: [Python](https://docs.brew.sh/Homebrew-and-Python.html).
 
 ### 3.3 Git
 Issue the following [formula](http://brewformulas.org/Git) to install Git 2.1.x
 
-```
+```commandline
 kathrada:~ arwhyte$ brew install git
 ```
 
 ### 3.4 Confirm Homebrew package installs
 Enter `brew list` in the terminal to return a list of package installs:
 
-```
+```commandline
 kathrada:~ arwhyte$ brew list --versions
 ```
 
 ### 3.5 Ugrading Homebrew packages
 Run the following commands periodically (I do it daily) to update formulas, upgrade packages, confirm installs, and delete outdated packages.
 
-```
+```commandline
 kathrada:~ arwhyte$ brew update
 kathrada:~ arwhyte$ brew upgrade
 kathrada:~ arwhyte$ brew doctor
@@ -171,13 +169,13 @@ Development\
 In my case, since I'm not basing my django project on some other individual's or organization's 
 forked repo I'll create my project in the arwhyte\ folder:
 
-```
+```commandline
 kathrada:~ arwhyte$ mkdir ~/Development/repos/github/arwhyte/django_tutorial
 ```
 
 Next, I initialize the empty django_tutorial directory as a Git repo:
 
-```
+```commandline
 kathrada:~ arwhyte$ cd ~/Development/repos/github/arwhyte/django_tutorial
 kathrada:django_tutorial arwhyte$ git init
 Initialized empty Git repository in /Users/arwhyte/Development/repos/github/arwhyte/django_tutorial/.git/
@@ -193,7 +191,7 @@ Next, create a virtual environment in order to isolate the Django project develo
 ### 5.1 Upgrade pip
 However, before installing `virtualenv` make sure that the latest version of `pip`, Python's own package manager, is installed locally:
 
-```
+```commandline
 kathrada:~ arwhyte$ python3 -m pip install --upgrade pip
 Collecting pip
   Using cached https://files.pythonhosted.org/packages/5f/25/e52d3f31441505a5f3af41213346e5b6c221c9e086a166f3703d2ddaf940/pip-18.0-py2.py3-none-any.whl
@@ -207,14 +205,14 @@ Successfully installed pip-18.0
 ### 5.2 Install virtualenv
 Once `pip` is updated, use it to install the `virtualenv` package.
 
-```
+```commandline
 kathrada:~ arwhyte$ pip3 install virtualenv
 ```
 
 ### 5.3 Create the Virtual Environment
 Now create a virtual environment for your django project.  Create it from within the project root directory:
 
-```
+```commandline
 kathrada:django_tutorial arwhyte$ virtualenv venv
 Using base prefix '/usr/local/Cellar/python/3.7.0/Frameworks/Python.framework/Versions/3.7'
 New python executable in /Users/arwhyte/Development/repos/github/arwhyte/django_tutorial/venv/bin/python3.7
@@ -226,7 +224,7 @@ Installing setuptools, pip, wheel...done.
 You __must__ activate the virtual environment before adding project-specific Python packages such
  as Django.
 
-```
+```commandline
 kathrada:django_tutorial arwhyte$ source venv/bin/activate
 (venv) kathrada:django_tutorial arwhyte$
 ```
@@ -235,7 +233,7 @@ When activated the prompt is prefixed with the name of the virtual environment (
 
 To deactivate the virtual environment run:
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$ deactivate
 kathrada:django_tutorial arwhyte$
 ```
@@ -243,14 +241,14 @@ kathrada:django_tutorial arwhyte$
 ### 5.5 Install Django
 After activating the django_tutorial virtual environment, install Django:
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$ pip3 install Django
 ```
 
 ### 5.6 Confirm Virtual Environment Installed Packages
 Check the installed packages in your django project virtual environment:
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$ pip3 list
 Package    Version
 ---------- -------
@@ -266,11 +264,11 @@ wheel      0.31.1
 From within your Django project root directory, create the "mysite" project by issuing the 
 django-admin "startproject" command. Note the inclusion of a trailing dot ('.') following "mysite":
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$ django-admin startproject mysite .
 ```
 
-__WARNING__: make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
+:warn: make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
 
 Generating `mysite` results in the following project layout:
 
@@ -287,7 +285,7 @@ django-tutorial/
 ### 6.1 Start the Development Server
 Start up the development server by issuing the `runserver` command:
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$ python manage.py runserver
 Performing system checks...
 
@@ -306,7 +304,7 @@ Quit the server with CTRL-BREAK.
 [05/Sep/2018 23:15:07] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
 ```
 
-__INFO__: ignore the database migration warnings; you will address them momentarily.
+:large_blue_circle: ignore the database migration warnings; you will address them momentarily.
 
 Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install worked successfully! Congratulations!" page successfully loads.
 
@@ -319,7 +317,7 @@ I don't use Homebrew for installing and maintaining MySQL.  Instead, [download](
 
 You will be prompted to sign in or create an Oracle account prior to performing this operation. Once authenticated, click the fat blue "Download Now" button to initiate the install process. 
 
-__INFO__: you can also click "No thanks, just start my download" to bypass account creation/login.
+:large_blue_circle: you can also click "No thanks, just start my download" to bypass account creation/login.
 
 Double-click the *.dmg archive file to open it, and then click on the *.pkg file to start the installer. Click through to the license screen, accept it, then click the "Install" button (do not change the install location). After the installer prompts you for your password, the installation process will commence.
 
@@ -329,18 +327,18 @@ Select "Use Strong Password Encryption for Authentication". Click the "Next" but
 ### 7.2 Root User Password Screen
 Provide a password for the "root" user.  
   
-__WARNING__: write this password down and store it in a safe place.  You *will need it* later.
+:warn: write this password down and store it in a safe place.  You *will need it* later.
 
-__WARNING__: leave checked "Start MySQL Server once the installation is complete."
+:warn: leave checked "Start MySQL Server once the installation is complete."
 
 Click the "Finish" button and then provide your system password if prompted in order to complete the installation.
 
-__INFO__: if you choose not to move the installer *.dmg to the Trash, remember to eject the mounted volume via the Finder. 
+:large_blue_circle: if you choose not to move the installer *.dmg to the Trash, remember to eject the mounted volume via the Finder. 
 
 ### 7.3 MySQL installation location
 The default installation directory is `/usr/local/`.
 
-```
+```commandline
 kathrada:~ arwhyte$ cd /usr/local
 kathrada:local arwhyte$ ls -la
 total 0
@@ -367,7 +365,7 @@ Read more about the MySQL Preference Pane [here](https://dev.mysql.com/doc/mysql
 Open ~/.bash_profile with nano in the terminal and add MySQL to the `PATH` environment variable 
 in order to simplify referencing MySQL client applications when using the terminal:
 
-```bash
+```commandline
 kathrada:~ arwhyte$ nano ~/.bash_profile
 ```
 
@@ -395,7 +393,7 @@ key when "File Name to Write: .bash_profile" is displayed. Then exit nano by hol
 
 To activate the changes in your current terminal session, issue the `source` command:
 
-```bash
+```commandline
 kathrada:~ arwhyte$ source ~/.bash_profile
 ```
 
@@ -404,13 +402,12 @@ Also [download](https://dev.mysql.com/downloads/workbench/) and install the MySQ
 
 As with the SQL Server Community Edition download you will be prompted to sign in or create an Oracle account prior to performing this operation. Once authenticated, click the fat blue "Download Now" button to initiate the install process. 
 
-__INFO__: you can also click "No thanks, just start my download" to bypass account creation/login.
+:large_blue_circle: you can also click "No thanks, just start my download" to bypass account creation/login.
 
 Double-click the *.dmg archive file to open it, and then drag the Workbench.app icon to the 
 Applications folder.
 
-__WARNING__: to log in to the Workstation as root you will need the root user password you 
-created earlier.
+:warn: to log in to the Workstation as root you will need the root user password you created earlier.
 
 ## <a name="mysqluser">8.0 Create a MySQL User Account</a>
 To confirm that all is well with the install log into the shell as the root user and issue the 
@@ -418,7 +415,7 @@ To confirm that all is well with the install log into the shell as the root user
 
 __Info__: `mysql -uroot -p` is equivalent to `mysql --user root --password`
 
-```
+```commandline
 kathrada:~ arwhyte$ mysql -uroot -p
 Enter password:
 Welcome to the MySQL monitor.  Commands end with ; or \g.
@@ -453,9 +450,9 @@ server.  Using the MySQL shell issue the following three statements:
 * GRANT ALL PRIVILEGES ON . . . ;
 * FLUSH PRIVILEGES . . . ; 
 
-__WARNING__: You must terminate each SQL statement with a semi-colon (";").
+:warn: You must terminate each SQL statement with a semi-colon (";").
 
-__INFO__: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
+:large_blue_circle: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
 
 ```mysql
 CREATE USER 'arwhyte'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MyPassword';
@@ -468,7 +465,7 @@ FLUSH PRIVILEGES;
 If by chance you make a mistake and garble a statement, press the "Control" and "c" keys (CTRL - c)
  to exit the input block.  Then start anew.
 
-__INFO__: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
+:large_blue_circle: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
 
 ```mysql
 CREATE USER 'arwhyte'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'somePassword';
@@ -478,7 +475,7 @@ FLUSH PRIVILEGES;
 
 To check on the current set of MySQL users issue the following statement:
 
-```
+```commandline
 mysql> SELECT User, Host FROM mysql.user;
 +------------------+-----------+
 | User             | Host      |
@@ -496,7 +493,7 @@ mysql> SELECT User, Host FROM mysql.user;
 
 Then exit the MySQL shell:
 
-```
+```commandline
 mysql> exit
 Bye
 kathrada:~ arwhyte$
@@ -509,15 +506,15 @@ Next, use the `mysql_config_editor` client utility to store your user account's 
 credentials in an obfuscated login path file named `.mylogin.cnf`. The file location is your home
  directory.
 
-__WARNING__: replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
+:warn: replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
   
-```
+```commandline
 kathrada:~ arwhyte$ mysql_config_editor set --login-path=client --host=localhost --user=arwhyte --password
 ```
 
 To confirm that the operation was successful invoke the `print` method:
 
-```
+```commandline
 kathrada:~ arwhyte$ mysql_config_editor print --all
 [client]
 user = arwhyte
@@ -528,11 +525,11 @@ host = localhost
 With your password obfuscated you can now log into the MySQL shell without specifying a password 
 argument:
 
-```
+```commandline
 kathrada:~ arwhyte$ mysql -uarwhyte
 ```
 
-__INFO__: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
+:large_blue_circle: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
 
 For additional information on obfuscating passwords see the MySQL 8.0 Reference Documentation [4.6.7 mysql_config_editor — MySQL Configuration Utility](https://dev.mysql.com/doc/refman/8.0/en/mysql-config-editor.html).
 
@@ -546,7 +543,7 @@ For additional information on option files see the MySQL 8.0 Reference Documenta
 ### 9.1 Create my.cnf
 Change directories to `/etc` and create a "mysql" directory using `sudo`:
 
-```bash
+```commandline
 kathrada:etc arwhyte$ cd /etc
 kathrada:etc arwhyte$ sudo mkdir mysql
 Password:
@@ -556,15 +553,15 @@ kathrada:mysql arwhyte$
 
 Then create a `my.cnf` options file using nano.
 
-__WARNING__: you must start nano using `sudo` to ensure you have the proper write permissions.  
+:warn: you must start nano using `sudo` to ensure you have the proper write permissions.  
 
-```bash
+```commandline
 kathrada:mysql arwhyte$ sudo nano my.cnf
 ```
 
 Copy the annotated MySQL client, server and mysqldump options into nano and then change the default user "arwhyte" to the user account you created earlier.
 
-__WARNING__: change the default user "arwhyte" to the user account created earlier.
+:warn: change the default user "arwhyte" to the user account created earlier.
 
 
 ```
@@ -661,23 +658,23 @@ recheck
 With MySQL Server restarted, log into the `mysql` shell with your non-root user and create a database 
 named "polls":
 
-```
+```commandline
 kathrada:~ arwhyte$ mysql -uarwhyte
 ```
 
-```
+```commandline
 mysql> CREATE DATABASE polls;
 Query OK, 1 row affected (0.04 sec)
 ```
 
-__WARNING__: You must terminate the SQL statement with a semi-colon (";").
+:warn: You must terminate the SQL statement with a semi-colon (";").
 
 ## <a name="mysqlclient">11.0 Install the Python mysqlclient Connector</a>
 The Django Team [recommends](https://docs.djangoproject.com/en/2.1/ref/databases/#mysql-notes) 
 using the [mysqlclient](https://pypi.python.org/pypi/mysqlclient) to connect to MySQL. 
 Activate your Django project virtual environment and install it using `pip`.
 
-```
+```commandline
 kathrada:~ arwhyte$ cd ~/Development/repos/github/arwhyte/django_tutorial
 kathrada:django_tutorial arwhyte$ source venv/bin/activate
 kathrada:django_tutorial arwhyte$ pip3 install mysqlclient
@@ -706,21 +703,21 @@ DATABASES = {
 
 Note that the `read_default_file` property is set to the path to your `my.cnf` options file.
 
-__INFO__: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
+:large_blue_circle: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
 
 ### 12.2 Run migrations
 Next, populate the polls database with the tables required to support both the app and Django's adminstration site using the `migrate` command.  If you earlier created a polls app when working with the default SQLite back-end, the polls models will be included in the migration.
 
-__WARNING__: you must activate the virtual environment before issuing this and the other `manage.py` commands described below.
+:warn: you must activate the virtual environment before issuing this and the other `manage.py` commands described below.
 
 
-```
+```commandline
 kathrada:~ arwhyte$ cd ~/Development/repos/github/arwhyte/django_tutorial
 kathrada:django_tutorial arwhyte$ source venv/bin/activate
 (venv) kathrada:django_tutorial arwhyte$ python manage.py migrate
 ```
 
-__WARNING__: the migration will likely fail with a long traceback that I've trimmed to the last 
+:warn: :rage: the migration will likely fail with a long traceback that I've trimmed to the last 
 two lines: 
 
 ```
@@ -731,7 +728,7 @@ Did you install mysqlclient?
 
 The error is due to Django's failure to locate the runtime library `libmysqlclient.21.dylib` (or an earlier version if using MySQL 5.x).  This is due to the Mac OS [System Itegrity Protection](https://support.apple.com/en-us/HT204899) (SIP) which blocks write access to certain system directories such as `/usr`. Writing to `/usr/local` is however permitted.
 
-__WORKAROUND__: one workaround discussed on [stackoverflow](https://stackoverflow.com/questions/14363522/django-dev-server-error-image-not-found) is to create a number of symbolic links that point to `/usr/local`.  
+:wink: one workaround discussed on [stackoverflow](https://stackoverflow.com/questions/14363522/django-dev-server-error-image-not-found) is to create a number of symbolic links that point to `/usr/local`.  
 
 In my case I had to create symbolic links for `
 * `libmysqlclient.21.dylib` 
@@ -741,7 +738,7 @@ In my case I had to create symbolic links for `
 Check `/usr/local/mysql/lib` and confirm that you have the same named lib files and open a new 
 terminal session and create the symbolic links (`ln -s source_file sym_link`) using `sudo`:
 
-```bash
+```commandline
 kathrada:~ arwhyte$ sudo ln -s /usr/local/mysql/lib/libmysqlclient.21.dylib /usr/local/lib/libmysqlclient.21.dylib
 kathrada:~ arwhyte$ sudo ln -s /usr/local/mysql/lib/libssl.1.0.0.dylib /usr/local/lib/libssl.1.0.0.dylib
 kathrada:~ arwhyte$ sudo ln -s /usr/local/mysql/lib/libcrypto.1.0.0.dylib /usr/local/lib/libcrypto.1.0.0.dylib
@@ -751,7 +748,7 @@ kathrada:~ arwhyte$ sudo ln -s /usr/local/mysql/lib /usr/local/mysql/lib/mysql
 Once you have the sym links in place, return to your Django terminal session and reissue the 
 `migrate` command.
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$ python manage.py migrate
 Operations to perform:
   Apply all migrations: admin, auth, contenttypes, polls, sessions
@@ -778,7 +775,7 @@ Running migrations:
 With the Django Polls app and MySQL connected you will need to (re)create the superuser account 
 in order to access the Django administration site.  Provide a username, email address, and password:
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$
 Username (leave blank to use 'arwhyte'):
 Email address: arwhyte@umich.edu
@@ -790,7 +787,7 @@ Superuser created successfully.
 ### 12.4 Create the Django tutorial polls app
 If you have not done so already, create a skeletal implementation of the Django tutorial polls app:
 
-```
+```commandline
 (venv) kathrada:django_tutorial arwhyte$ python manage.py startapp polls
 ```
 
