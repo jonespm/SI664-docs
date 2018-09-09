@@ -724,7 +724,7 @@ polls/
     views.py
 ```
 
-## 11.5 Start/Continue the Django Team Polls Tutorial
+### 11.5 Start/Continue the Django Team Polls Tutorial
 Either start or continue working on the Django Team's Polls [tutorial](https://docs.djangoproject.com/en/2.1/intro/tutorial01/). You may need to run additional migrations to update the MySQL polls database and/or recreate questions created earlier when the polls app was connected to the SQLite database.
 
 ## Sources
