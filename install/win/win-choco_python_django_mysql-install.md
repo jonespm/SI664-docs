@@ -6,8 +6,7 @@ Outside the Parallels virtual machine (VM) I use [Homebrew](https://brew.sh/), a
 
 I installed Chocolatey using Windows [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/getting-started/getting-started-with-windows-powershell?view=powershell-6). Chocolatey can also be installed using `cmd.exe`. See the Chocolatey [install page](https://chocolatey.org/docs/installation) for directions.
 
-The Chocolatey approach is but one way to manage software installs.  You may already have [Python
- 3.7.x](https://www.python.org/downloads/windows/), [nano](https://www.nano-editor.org/download.php), and [Git](https://git-scm.com/download/win) installed, and perhaps [MySQL 8.0.x](https://dev.mysql.com/downloads/windows/installer/8.0.html) installed as well using each product's own installers.  If so, you can proceed directly to section 4.0 and review/follow the set up instructions for installing Django, initializing a Git working directory, and connecting your Django project to a MySQL 8.0.x database.
+The Chocolatey approach is but one way to manage software installs.  You may already have [Python 3.7.x](https://www.python.org/downloads/windows/), [nano](https://www.nano-editor.org/download.php), and [Git](https://git-scm.com/download/win) installed, and perhaps [MySQL 8.0.x](https://dev.mysql.com/downloads/windows/installer/8.0.html) too using each product's own installers.  If so, you can proceed directly to section 4.0 and review/follow the set up instructions for installing Django, initializing a Git working directory, and connecting your Django project to a MySQL 8.0.x database.
 
 ## TOC
 * 1.0 [Configure Windows PowerShell](#powershell)
@@ -22,7 +21,7 @@ The Chocolatey approach is but one way to manage software installs.  You may alr
 * 10.0 [Install the Python mysqlclient Connector](#mysqlclient)
 * 11.0 [Connect Django to MySQL](#connectdjangomysql)
 
-## <a name="powershell">1.0  Configure Windows PowerShell</a>
+## <a name="powershell">1.0 Configure Windows PowerShell</a>
 Windows PowerShell is a command line shell for system administrators built on top of .Net. Administrative tasks are performed by running `cmdlets` (pronounced "command-lets").
 
 ### 1.1 Open PowerShell
@@ -427,7 +426,11 @@ __INFO__: choose the "mysql-installer-web-community-8.0.*.0.msi" file for online
 
 __WARNING__: Run the installer as an administrator.
 
-You will be prompted to sign in or create an Oracle account prior to performing this operation.  Once authenticated, click the fat blue "Download Now" button to initiate the install process.  Select "Run" when Windows asks what to do with the *.msi file and then select "Yes" when prompted to allow the installer to make changes to your device.
+You will be prompted to sign in or create an Oracle account prior to performing this operation.  Once authenticated, click the fat blue "Download Now" button to initiate the install process.  
+
+__INFO__: you can also click "No thanks, just start my download" to bypass account creation/login.
+
+Select "Run" when Windows asks what to do with the *.msi file and then select "Yes" when prompted to allow the installer to make changes to your device.
 
 ### 7.1 License Agreement Screen / Choosing a Setup Type Screen
 The installer will search for previously installed packages.  Assuming previous installs are not found, agree to the license terms and then choose your setup type.  I chose "Custom".  Then click the "Next" button.
@@ -478,7 +481,7 @@ Select "Standalone MySQL Server /Classic MySQL Replication".  Click the "Next" b
 Click the "Next" button.
 
 #### 7.5.3 Authentication Method Screen
-Select "Use Strong Password Encryption for Authentication". Click the "Next" button
+Select "Use Strong Password Encryption for Authentication". Click the "Next" button.
 
 #### 7.5.4 Accounts and Roles Screen
 * Root Account Password
@@ -572,8 +575,7 @@ For additional information on adding users see the MySQL 8.0 Reference Documenta
 ### 8.2 Obfuscate User Password
 Next, use the `mysql_config_editor` client utility to store your user account's authentication credentials in an obfuscated login path file named `.mylogin.cnf`. The file location is the %APPDATA%\MySQL directory on Windows.
 
-__INFO__: replace 'arwhyte' and 'MyPassword' with the name and password of the user account you 
-created above.
+__WARNING__: replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
   
 ```
 PS C:\> mysql_config_editor set --login-path=client --host=localhost --user=arwhyte --password
@@ -657,8 +659,7 @@ DATABASES = {
 }
 ```
 
-The `read_default_file` property assumes a standard MySQL install path where the `my.ini` options
- file can be found.
+Note that the `read_default_file` property assumes a standard MySQL install path where the `my.ini` options file can be found.
 
 __INFO__: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
 
