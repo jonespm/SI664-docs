@@ -1,14 +1,13 @@
 # macOS 10.13.x (High Sierra): Setting up a Python 3.7.x, Django 2.1.x, MySQL 8.0.x Development 
-Environment
-
 I do my development work on a Mac. I use [Homebrew](https://brew.sh/), a macOS package manager, to acquire and maintain a good deal of the software I use on a daily basis, including Python and Git. An exception is MySQL.  I use the [MySQL 8.0.x installer](https://dev.mysql.com/downloads/windows/installer/8.0.html) to install MySQL Server, MySQL Workbench and other related MySQL products. 
 
-The Homebrew approach is but one way to manage software installs.  You may already have [Python 3.7.x](https://www.python.org/downloads/windows/) and [Git](https://git-scm.com/download/win) installed, and perhaps [MySQL 8.0.x](https://dev.mysql.com/downloads/windows/installer/8.0.html) too using each product's own installers.  If so, you can proceed directly to section 4.0 and review/follow the set up instructions for installing Django, initializing a Git working directory, and connecting your Django project to a MySQL 8.0.x database.
+The Homebrew approach is but one way to manage software installs.  In the case of Python on a Mac
+ it is often described as the [recommended way](https://python-docs.readthedocs.io/en/latest/starting/install3/osx.html) to install and maintain it. That said, you may already have [Python 3.7.x](https://www.python.org/downloads/windows/) and [Git](https://git-scm.com/download/win) installed, and perhaps [MySQL 8.0.x](https://dev.mysql.com/downloads/windows/installer/8.0.html) too using each product's own installers.  If so, you can proceed directly to section 4.0 and review/follow the set up instructions for installing Django, initializing a Git working directory, and connecting your Django project to a MySQL 8.0.x database.
 
 ## TOC
 * 1.0 [Install Xcode](#xcodeinstall)
 * 2.0 [Install Homebrew](#homebrewinstall)
-* 3.0 [Add Homebrew Packages](#homebrewpkgs)
+* 3.0 [Install Homebrew Python and Git Packages](#homebrewpkgs)
 * 4.0 [Create a Git Working directory](#gitworkingdir)
 * 5.0 [Create a Django Project Virtual Environment](#venv)
 * 6.0 [Generate the mysite project](#djangomysite)
@@ -37,7 +36,7 @@ then the full Xcode package is installed and you are ready to install Homebrew. 
  hand, Xcode is not installed on your machine visit the Apple App Store, search for "Xcode", and install it (it's free).
 
 ## <a name="homebrewinstall">2.0 Install Homebrew</a>
-[Homebrew](https://brew.sh/) describes itself as "the missing package manager for macOS".  I use it to manage Git, GnuPG, Heroku, Hugo, Maven, nano, OpenSSL, Pandoc, PHP, Python, Ruby, SQLite and a number of other software installs.  
+[Homebrew](https://brew.sh/) describes itself as "the missing package manager for macOS".  I use it to manage curl, Git, GnuPG, Heroku, Hugo, Maven, nano, OpenSSL, Pandoc, PHP, Python, Ruby, SQLite and a number of other software installs.  
 
 Open the terminal (I use [iTerm2](https://www.iterm2.com/)) and run the following script to install Homebrew:  
 
@@ -63,7 +62,7 @@ the install was successful.
 Homebrew requires that the `/usr/local/bin` directory be listed first in your `PATH` environment 
 variable. 
 
-Use the command line text editor nano to open your ~/.bash_profile:  
+Use the command line text editor [nano](https://www.nano-editor.org/) to open your ~/.bash_profile:  
 
 ```commandline
 kathrada:~ arwhyte$ nano ~/.bash_profile
@@ -93,7 +92,7 @@ To activate the changes in your current terminal session, issue the `source` com
 kathrada:~ arwhyte$ source ~/.bash_profile
 ```
 
-## <a name="homebrewpkgs">3.0 Add Homebrew Packages</a>
+## <a name="homebrewpkgs">3.0 Install Homebrew Python and Git Packages</a>
 Now let's install Python and Git.
 
 ### 3.1 Python 3.7.x
@@ -111,7 +110,7 @@ arwhyte$ python3 --version
 Python 3.7.0
 ```
 
-If Python 3.x is installed but the version is not the latest (currently 3.7.0), consider running Dr Chuck's Python 3 [uninstaller](https://github.com/csev/uninstall-python3) shell script. Then reinstall Python 3 using Homebrew.  
+:bulb: If Python 3.x is installed but the version is not the latest (currently 3.7.0), consider running Dr Chuck's Python 3 [uninstaller](https://github.com/csev/uninstall-python3) shell script. Then reinstall Python 3 using Homebrew.  
 
 Issue the following [formula](http://brewformulas.org/Python) to install Python 3.7.x (pip and Setuptools are included)
 
@@ -138,7 +137,7 @@ kathrada:~ arwhyte$ brew list --versions
 ```
 
 ### 3.5 Ugrading Homebrew packages
-Run the following commands periodically (I do it daily) to update formulas, upgrade packages, confirm installs, and delete outdated packages.
+Run the following commands periodically (I do so daily) to update formulas, upgrade packages, confirm installs, and delete outdated packages.
 
 ```commandline
 kathrada:~ arwhyte$ brew update
@@ -213,6 +212,7 @@ kathrada:~ arwhyte$ pip3 install virtualenv
 Now create a virtual environment for your django project.  Create it from within the project root directory:
 
 ```commandline
+kathrada:~ arwhyte$ cd ~/Development/repos/github/arwhyte/django_tutorial
 kathrada:django_tutorial arwhyte$ virtualenv venv
 Using base prefix '/usr/local/Cellar/python/3.7.0/Frameworks/Python.framework/Versions/3.7'
 New python executable in /Users/arwhyte/Development/repos/github/arwhyte/django_tutorial/venv/bin/python3.7
@@ -410,6 +410,8 @@ Applications folder.
 
 :warning: To log in to the Workstation as root you will need the root user password you created earlier.
 
+:bulb: If you choose not to move the installer *.dmg to the Trash, remember to eject the mounted volume via the Finder.
+
 ## <a name="mysqluser">8.0 Create a MySQL User Account</a>
 To confirm that all is well with the install log into the shell as the root user and issue the 
 `SHOW DATABASES` statement.
@@ -466,10 +468,10 @@ FLUSH PRIVILEGES;
 If by chance you make a mistake and garble a statement, press the "Control" and "c" keys (CTRL - c)
  to exit the input block.  Then start anew.
 
-:confused: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password.  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
+:confused: Originally I used the new [caching SHA-2 pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) algorithm to create my password (example statement below).  However, I encountered connection issues so switched back to MySQL's [native pluggable authentication](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) in the statement issued above.
 
 ```mysql
-CREATE USER 'arwhyte'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'somePassword';
+CREATE USER 'arwhyte'@'127.0.0.1' IDENTIFIED WITH caching_sha2_password BY 'MyPassword';
 GRANT ALL PRIVILEGES ON *.* TO 'arwhyte'@'127.0.0.1' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
@@ -561,10 +563,9 @@ Then create a `my.cnf` options file using nano.
 kathrada:mysql arwhyte$ sudo nano my.cnf
 ```
 
-Copy the annotated MySQL client, server and mysqldump options into nano and then change the default user "arwhyte" to the user account you created earlier.
+Copy the annotated MySQL client, server and mysqldump options in the code blow below into nano and then change the default user "arwhyte" to the user account you created earlier.
 
 :warning: Change the default user "arwhyte" to the user account created earlier.
-
 
 ```
 # ------------------------
@@ -645,7 +646,7 @@ secure-file-priv=''
 quick
 ```
 
-After pasting in the options above and replacing the user name value, write out the change by holding down the "control" and "o" keys (CTRL - o), then press the return key when "File Name to Write: .bash_profile" is displayed. Then exit nano by holding down the "control" and "x" keys (CTRL - x).
+After pasting the MySQL options above into nano and replacing the user name value, write out the change by holding down the "control" and "o" keys (CTRL - o), then press the return key when "File Name to Write: .bash_profile" is displayed. Then exit nano by holding down the "control" and "x" keys (CTRL - x).
 
 ### 9.2 Restart MySQL Server
 With `/etc/mysql/my.cnf` created, use the Apple System Preferences MySQL Preference Pane to stop 

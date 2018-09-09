@@ -667,8 +667,7 @@ database schemas only (e.g., polls, test_polls).
 ### 11.2 Run migrations
 Next, populate the polls database with the tables required to support both the app and Django's adminstration site using the `migrate` command.  If you earlier created a polls app when working with the default SQLite back-end, the polls models will be included in the migration.
 
-:warning: You must activate the virtual environment before issuing this and the other `manage
-.py` commands described below.
+:warning: You must activate the virtual environment before issuing this and the other `manage.py` commands described below.
 
 ```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> python manage.py migrate
