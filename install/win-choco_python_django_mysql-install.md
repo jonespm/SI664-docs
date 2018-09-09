@@ -132,7 +132,7 @@ Issue the following `choco` command to install the nano [package](https://chocol
 PS C:\Users\arwhyte> choco install -y nano
 ```
 
-_Note_: the `-y` flag tells Chocolatey to execute the script without a formal confirmation prompt.
+_Note_: The `-y` flag tells Chocolatey to execute the script without a formal confirmation prompt.
 
 ### 3.2 Python 3.7.x
 Issue the following `choco` command to install the latest version of Python 3.7.x (currently 3.7.0) using the Chocolatey Python [package](https://chocolatey.org/packages/python):
@@ -212,7 +212,7 @@ PS C:\Users\arwhyte> python -V
 Python 3.7.0
 ```
 
-:warning: running `refreshenv` did not work for me.  I had to exit PowerShell and then restart it
+:confused: Running `refreshenv` did not work for me.  I had to exit PowerShell and then restart it
  (as administrator) in order to get it to recognize the addition of Python in the `PATH` environment variable.
 
 ### 3.3 Git
@@ -371,7 +371,8 @@ django-admin "startproject" command. Note the inclusion of a trailing dot ('.') 
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django_tutorial> django-admin startproject mysite .
 ```
 
-:warning: make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
+:warning: Make sure you include the trailing dot ('.') in the command.  The dot creates the new 
+project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
 
 Generating `mysite` results in the following project layout:
 
@@ -407,7 +408,7 @@ Quit the server with CTRL-BREAK.
 [05/Sep/2018 23:15:07] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
 ```
 
-:bulb: ignore the database migration warnings; you will address them momentarily.
+:bulb: Ignore the database migration warnings; you will address them momentarily.
 
 Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install worked successfully! Congratulations!" page successfully loads.
 
@@ -419,13 +420,13 @@ I don't use Chocolatey for installing and maintaining MySQL.  Instead, download 
 
 A useful short video that walks the install process can be watched [here](https://www.youtube.com/watch?v=Ddx13KlW8yQ).
 
-:bulb: choose the "mysql-installer-web-community-8.0.*.0.msi" file for online connections (\* = patch number, e.g. 8.0.12).
+:bulb: Choose the "mysql-installer-web-community-8.0.*.0.msi" file for online connections (\* = patch number, e.g. 8.0.12).
 
 :warning: Run the installer as an administrator.
 
 You will be prompted to sign in or create an Oracle account prior to performing this operation.  Once authenticated, click the fat blue "Download Now" button to initiate the install process.  
 
-:bulb: you can also click "No thanks, just start my download" to bypass account creation/login.
+:bulb: You can also click "No thanks, just start my download" to bypass account creation/login.
 
 Select "Run" when Windows asks what to do with the *.msi file and then select "Yes" when prompted to allow the installer to make changes to your device.
 
@@ -483,7 +484,7 @@ Select "Use Strong Password Encryption for Authentication". Click the "Next" but
 #### 7.5.4 Accounts and Roles Screen
 * Root Account Password
   - Provide a password for the "Root" user.  
-  - :warning: write this password down and store it in a safe place.  You *will need it* later.
+  - :warning: Write this password down and store it in a safe place.  You *will need it* later.
 * MySQL User Accounts
   - Skip. You will add other users later.
 
@@ -491,7 +492,7 @@ Click the "Next" button.
 
 #### 7.5.5 Windows Service Screen
 * Click the check box for "Configure MySQL as a Windows Service".  
-  - :warning: left unchecked MySQL Server will require a manual start in order to use it.
+  - :warning: Left unchecked MySQL Server will require a manual start in order to use it.
 * Windows Service Details
   - Set Windows Service Name to "MySQL80"
   - Click the check box for "Start the MySQL Server at System Startup".
@@ -549,7 +550,7 @@ server.  Using the MySQL shell issue the following three statements:
 
 :warning: You must terminate each SQL statement with a semi-colon (";").
 
-:bulb: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
+:bulb: Replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
 
 ```mysql
 CREATE USER 'arwhyte'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MyPassword';
@@ -572,7 +573,8 @@ For additional information on adding users see the MySQL 8.0 Reference Documenta
 ### 8.2 Obfuscate User Password
 Next, use the `mysql_config_editor` client utility to store your user account's authentication credentials in an obfuscated login path file named `.mylogin.cnf`. The file location is the %APPDATA%\MySQL directory on Windows.
 
-:warning: replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
+:warning: Replace 'arwhyte' with the name of the user account you created above and then add the 
+password you earlier created when prompted.
   
 ```commandline
 PS C:\> mysql_config_editor set --login-path=client --host=localhost --user=arwhyte --password
@@ -595,7 +597,7 @@ argument:
 PS C:\> mysql --user=arwhyte
 ```
 
-:bulb: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
+:bulb: As an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
 
 For additional information on obfuscating passwords see the MySQL 8.0 Reference Documentation [4.6.7 mysql_config_editor — MySQL Configuration Utility](https://dev.mysql.com/doc/refman/8.0/en/mysql-config-editor.html).
 
@@ -617,8 +619,7 @@ using the [mysqlclient](https://pypi.python.org/pypi/mysqlclient) to connect to 
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> pip install mysqlclient
 ```
 
-:warning: :rage: more than likely the install attempt will fail with an ugly error message that I've 
-slimmed down to the following line:
+:warning: :rage: More than likely the install attempt will fail with an ugly error message that I've slimmed down to the following line:
 
 ```
 ...
@@ -660,12 +661,14 @@ DATABASES = {
 
 Note that the `read_default_file` property assumes a standard MySQL install path where the `my.ini` options file can be found.
 
-:bulb: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
+:bulb: Later you will create a 'django' user with reduced privileges that are scoped to certain 
+database schemas only (e.g., polls, test_polls).
 
 ### 11.2 Run migrations
 Next, populate the polls database with the tables required to support both the app and Django's adminstration site using the `migrate` command.  If you earlier created a polls app when working with the default SQLite back-end, the polls models will be included in the migration.
 
-:warning: you must activate the virtual environment before issuing this and the other `manage.py` commands described below.
+:warning: You must activate the virtual environment before issuing this and the other `manage
+.py` commands described below.
 
 ```commandline
 (venv) PS C:\Users\arwhyte\Development\repos\github\arwhyte\django-tutorial-mysql> python manage.py migrate

@@ -119,9 +119,9 @@ Issue the following [formula](http://brewformulas.org/Python) to install Python 
 kathrada:~ arwhyte$ brew install python
 ```
 
-:bulb: the "python3" brew [formula](http://brewformulas.org/Python3) is now inactive.
+:bulb: The "python3" brew [formula](http://brewformulas.org/Python3) is now inactive.
 
-:warn: When you `brew install` formulae that provide Python bindings, you should not be in an active virtual environment.  See Homebrew Documentation: [Python](https://docs.brew.sh/Homebrew-and-Python.html).
+:warning: When you `brew install` formulae that provide Python bindings, you should not be in an active virtual environment.  See Homebrew Documentation: [Python](https://docs.brew.sh/Homebrew-and-Python.html).
 
 ### 3.3 Git
 Issue the following [formula](http://brewformulas.org/Git) to install Git 2.1.x
@@ -268,7 +268,7 @@ django-admin "startproject" command. Note the inclusion of a trailing dot ('.') 
 (venv) kathrada:django_tutorial arwhyte$ django-admin startproject mysite .
 ```
 
-:warn: make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
+:warning: Make sure you include the trailing dot ('.') in the command.  The dot creates the new project with a directory structure that simplifies deployment to a server.  If you neglect to include the dot, delete the directories and files that were created (except 'venv') and run the command again along with the trailing doc ('.').
 
 Generating `mysite` results in the following project layout:
 
@@ -304,7 +304,7 @@ Quit the server with CTRL-BREAK.
 [05/Sep/2018 23:15:07] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
 ```
 
-:bulb: ignore the database migration warnings; you will address them momentarily.
+:bulb: Ignore the database migration warnings; you will address them momentarily.
 
 Open a web browser and point to `http://127.0.0.1:8000/`.  Confirm that the Django "The install worked successfully! Congratulations!" page successfully loads.
 
@@ -317,7 +317,7 @@ I don't use Homebrew for installing and maintaining MySQL.  Instead, [download](
 
 You will be prompted to sign in or create an Oracle account prior to performing this operation. Once authenticated, click the fat blue "Download Now" button to initiate the install process. 
 
-:bulb: you can also click "No thanks, just start my download" to bypass account creation/login.
+:bulb: You can also click "No thanks, just start my download" to bypass account creation/login.
 
 Double-click the *.dmg archive file to open it, and then click on the *.pkg file to start the installer. Click through to the license screen, accept it, then click the "Install" button (do not change the install location). After the installer prompts you for your password, the installation process will commence.
 
@@ -327,13 +327,14 @@ Select "Use Strong Password Encryption for Authentication". Click the "Next" but
 ### 7.2 Root User Password Screen
 Provide a password for the "root" user.  
   
-:warn: write this password down and store it in a safe place.  You *will need it* later.
+:warning: Write this password down and store it in a safe place.  You *will need it* later.
 
-:warn: leave checked "Start MySQL Server once the installation is complete."
+:warning: Leave checked "Start MySQL Server once the installation is complete."
 
 Click the "Finish" button and then provide your system password if prompted in order to complete the installation.
 
-:bulb: if you choose not to move the installer *.dmg to the Trash, remember to eject the mounted volume via the Finder. 
+:bulb: If you choose not to move the installer *.dmg to the Trash, remember to eject the mounted 
+volume via the Finder. 
 
 ### 7.3 MySQL installation location
 The default installation directory is `/usr/local/`.
@@ -402,18 +403,18 @@ Also [download](https://dev.mysql.com/downloads/workbench/) and install the MySQ
 
 As with the SQL Server Community Edition download you will be prompted to sign in or create an Oracle account prior to performing this operation. Once authenticated, click the fat blue "Download Now" button to initiate the install process. 
 
-:bulb: you can also click "No thanks, just start my download" to bypass account creation/login.
+:bulb: You can also click "No thanks, just start my download" to bypass account creation/login.
 
 Double-click the *.dmg archive file to open it, and then drag the Workbench.app icon to the 
 Applications folder.
 
-:warn: to log in to the Workstation as root you will need the root user password you created earlier.
+:warning: To log in to the Workstation as root you will need the root user password you created earlier.
 
 ## <a name="mysqluser">8.0 Create a MySQL User Account</a>
 To confirm that all is well with the install log into the shell as the root user and issue the 
 `SHOW DATABASES` statement.
 
-__Info__: `mysql -uroot -p` is equivalent to `mysql --user root --password`
+:bulb: `mysql -uroot -p` is equivalent to `mysql --user root --password`
 
 ```commandline
 kathrada:~ arwhyte$ mysql -uroot -p
@@ -450,9 +451,9 @@ server.  Using the MySQL shell issue the following three statements:
 * GRANT ALL PRIVILEGES ON . . . ;
 * FLUSH PRIVILEGES . . . ; 
 
-:warn: You must terminate each SQL statement with a semi-colon (";").
+:warning: You must terminate each SQL statement with a semi-colon (";").
 
-:bulb: replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
+:bulb: Replace 'arwhyte' and 'MyPassword' with a name and password of your choosing.
 
 ```mysql
 CREATE USER 'arwhyte'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MyPassword';
@@ -506,7 +507,7 @@ Next, use the `mysql_config_editor` client utility to store your user account's 
 credentials in an obfuscated login path file named `.mylogin.cnf`. The file location is your home
  directory.
 
-:warn: replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
+:warning: Replace 'arwhyte' with the name of the user account you created above and then add the password you earlier created when prompted.
   
 ```commandline
 kathrada:~ arwhyte$ mysql_config_editor set --login-path=client --host=localhost --user=arwhyte --password
@@ -529,7 +530,8 @@ argument:
 kathrada:~ arwhyte$ mysql -uarwhyte
 ```
 
-:bulb: as an added benefit, if you specify this MySQL user account (or another using the same password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
+:bulb: As an added benefit, if you specify this MySQL user account (or another using the same 
+password) as the database user in your Django project's mysite `settings.py` file, you will not need to reference the user's password in the settings file.
 
 For additional information on obfuscating passwords see the MySQL 8.0 Reference Documentation [4.6.7 mysql_config_editor — MySQL Configuration Utility](https://dev.mysql.com/doc/refman/8.0/en/mysql-config-editor.html).
 
@@ -553,7 +555,7 @@ kathrada:mysql arwhyte$
 
 Then create a `my.cnf` options file using nano.
 
-:warn: you must start nano using `sudo` to ensure you have the proper write permissions.  
+:warning: You must start nano using `sudo` to ensure you have the proper write permissions.  
 
 ```commandline
 kathrada:mysql arwhyte$ sudo nano my.cnf
@@ -561,7 +563,7 @@ kathrada:mysql arwhyte$ sudo nano my.cnf
 
 Copy the annotated MySQL client, server and mysqldump options into nano and then change the default user "arwhyte" to the user account you created earlier.
 
-:warn: change the default user "arwhyte" to the user account created earlier.
+:warning: Change the default user "arwhyte" to the user account created earlier.
 
 
 ```
@@ -667,7 +669,7 @@ mysql> CREATE DATABASE polls;
 Query OK, 1 row affected (0.04 sec)
 ```
 
-:warn: You must terminate the SQL statement with a semi-colon (";").
+:warning: You must terminate the SQL statement with a semi-colon (";").
 
 ## <a name="mysqlclient">11.0 Install the Python mysqlclient Connector</a>
 The Django Team [recommends](https://docs.djangoproject.com/en/2.1/ref/databases/#mysql-notes) 
@@ -703,12 +705,13 @@ DATABASES = {
 
 Note that the `read_default_file` property is set to the path to your `my.cnf` options file.
 
-:bulb: later you will create a 'django' user with reduced privileges that are scoped to certain database schemas only (e.g., polls, test_polls).
+:bulb: Later you will create a 'django' user with reduced privileges that are scoped to certain 
+database schemas only (e.g., polls, test_polls).
 
 ### 12.2 Run migrations
 Next, populate the polls database with the tables required to support both the app and Django's adminstration site using the `migrate` command.  If you earlier created a polls app when working with the default SQLite back-end, the polls models will be included in the migration.
 
-:warn: you must activate the virtual environment before issuing this and the other `manage.py` commands described below.
+:warning: You must activate the virtual environment before issuing this and the other `manage.py` commands described below.
 
 
 ```commandline
@@ -717,8 +720,7 @@ kathrada:django_tutorial arwhyte$ source venv/bin/activate
 (venv) kathrada:django_tutorial arwhyte$ python manage.py migrate
 ```
 
-:warn: :rage: the migration will likely fail with a long traceback that I've trimmed to the last 
-two lines: 
+:warning: :rage: The migration will likely fail with a long traceback that I've trimmed to the last two lines: 
 
 ```
 ...
@@ -728,7 +730,8 @@ Did you install mysqlclient?
 
 The error is due to Django's failure to locate the runtime library `libmysqlclient.21.dylib` (or an earlier version if using MySQL 5.x).  This is due to the Mac OS [System Itegrity Protection](https://support.apple.com/en-us/HT204899) (SIP) which blocks write access to certain system directories such as `/usr`. Writing to `/usr/local` is however permitted.
 
-:wink: one workaround discussed on [stackoverflow](https://stackoverflow.com/questions/14363522/django-dev-server-error-image-not-found) is to create a number of symbolic links that point to `/usr/local`.  
+:wink: One workaround discussed on [stackoverflow](https://stackoverflow
+.com/questions/14363522/django-dev-server-error-image-not-found) is to create a number of symbolic links that point to `/usr/local`.  
 
 In my case I had to create symbolic links for `
 * `libmysqlclient.21.dylib` 
